@@ -12,7 +12,7 @@ function Start ()
 
 function move_chara()
 {
-	var mas =  floor.GetComponent(board).select_pos;
+	var mas : Vector3 =  floor.GetComponent(board).select_pos;
 	
 	if(mas != Vector3(0,0,0) && this.gameObject.transform.position != mas)
 	{
