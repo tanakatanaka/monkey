@@ -1,19 +1,9 @@
+/*
 var bullet: GameObject;
 var out_cube : GameObject;
 var line : GameObject;
 var turn : int = 1;
-private var click_area : Vector3;
-
-private var board = 
-[
-	[1,1,1,1,1,1,1],
-	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
-	[1,1,1,1,1,1,1]
-];
+var click_area : Vector3;
 
 function create_pen()
 {
@@ -60,16 +50,6 @@ function Start ()
 	create_line();
 }
 
-function get_click_area()
-{
-	if(click_area == null)
-	{
-		click_area = Vector3(0,0,0);
-	}
-	
-	return click_area;
-}
-
 function area_check(x : int, z : int)
 {
 	if(x < 0 || x > 6 || z > 0 || z < -6)
@@ -114,3 +94,4 @@ function Update ()
 		}
 	}
 }
+*/
