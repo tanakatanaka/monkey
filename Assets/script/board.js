@@ -17,7 +17,13 @@ var bullet : GameObject;
 var main_camera : Camera;
 var select_pos : Vector3;
 
+/// 盤面の縦幅と横幅
+function get_size() : Vector2
+{
+	return Vector2(board.Length, board[0].Length);
+}
 
+/// 初期化のひとつ。board配列の内容にそって壁を配置する
 function create_pen()
 {
  	var pos:Vector3 = out_cube.transform.position;
@@ -38,9 +44,12 @@ function create_pen()
 	}	
 }
 
+/// 初期化のひとつ。盤面の格子を引く
 function create_line()
 {
-	for(var i = 0; i < 4; i++) 
+	var n : int = get_size().x - 2;
+	
+	for(var i : int = 0; i < n; i++) 
 	{
 		var pos : Vector3 = Vector3(0, 0, 0);
 		var clone : GameObject = Instantiate(line, pos, line.transform.rotation);
@@ -57,59 +66,47 @@ function create_line()
 	}	
 }
 
-
-
 function Start () 
 {
 	create_pen();
 	create_line();
 }
 
-function area_check(x : int, z : int)
+/*
+area_checkは判定と計算が混じってたので以下３つに処理を分けました
+あとXZ座標をVector2というXYだけの構造体にまとめました
+*/
+
+// 座標までキャラが移動していいか調べる
+function area_check(p : Vector2) : boolean
 {
-	if(x < 0 || x > 6 || z > 0 || z < -6)
-	{
-		Debug.Log("soto dayo");
-		return 0;
-	}
-	
-	z = -z;
-	
-	if(board[x][z] > 0)
-	{
-		Debug.Log("nannka aru");
-		return 0;
-	}
-	else
-	{
-		board[x][z] = 1;
-		select_pos = Vector3(x, 0.5, -z);
-	}
-	
-	return 1;
+	return is_in_area(p) && !is_occupied(p);
 }
 
+// 座標にキャラがいるかどうか調べる
+function is_occupied(p : Vector2) : boolean
+{
+	return board[p.x][p.y] > 0;
+}
+
+// 座標が盤面内か調べる
+function is_in_area(p : Vector2) : boolean
+{
+	return 0 <= p.x && p.x < board.Length && 0 <= p.y && p.y < board[0].Length;
+}
+
+// 盤面座標を空間座標に変換する
+function to_world_point(p : Vector2) : Vector3
+{
+	return Vector3(p.x, 0.5, -p.y);
+}
+
+// 空間座標を盤面座標に変換する
+function to_board_point(position : Vector3) : Vector2
+{
+	return Vector2(Mathf.RoundToInt(position.x), -Mathf.RoundToInt(position.z));
+}
 
 function Update () 
 {
-	if( Input.GetButtonDown("Fire1")) 
-	{
-		var screenPoint = Input.mousePosition;
-		screenPoint.z = 8.0;
-		var worldPoint = main_camera.ScreenToWorldPoint(screenPoint);
-		worldPoint.x = Mathf.RoundToInt(worldPoint.x);
-		worldPoint.z = Mathf.RoundToInt(worldPoint.z);
-		worldPoint.y = 0.5;
-		
-		Debug.Log(worldPoint);
-		
-		if(area_check(worldPoint.x, worldPoint.z))
-		{	
-			var bul : GameObject = Instantiate(bullet, worldPoint, transform.rotation);
-		}
-		else
-		{
-			select_pos = Vector3.zero;
-		}
-	}
 }
