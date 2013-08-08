@@ -1,26 +1,23 @@
 #pragma strict
 
-private var compass : int;
-var game : GameObject;
+var compass : int = 0;
+var floor : GameObject;
 
 
 
 function Start () 
 {
 	this.gameObject.transform.position = Vector3(3, 0.5, -3);
-	compass = 1;
 }
 
 function move_chara()
 {
-/*
-	var mas =  game.GetComponent(select_mas);
+	var mas =  floor.GetComponent(board).select_pos;
 	
-	if(mas.click_area != Vector3(0,0,0) && this.gameObject.transform.position != mas.click_area)
+	if(mas != Vector3(0,0,0) && this.gameObject.transform.position != mas)
 	{
-		this.gameObject.transform.Translate(mas.click_area);
+		this.gameObject.transform.Translate(mas);
 	}
-*/	
 }
 
 function Update () 
