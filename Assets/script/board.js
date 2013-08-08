@@ -15,7 +15,7 @@ var out_cube : GameObject;
 var line : GameObject;
 var bullet : GameObject;
 var main_camera : Camera;
-var select_pos : Vector3 = Vector3(0,0,0);
+var select_pos : Vector3;
 
 
 function create_pen()
@@ -106,6 +106,10 @@ function Update ()
 		if(area_check(worldPoint.x, worldPoint.z))
 		{	
 			var bul : GameObject = Instantiate(bullet, worldPoint, transform.rotation);
+		}
+		else
+		{
+			select_pos = Vector3.zero;
 		}
 	}
 }
