@@ -5,17 +5,17 @@ var board =
 	[1,1,1,1,1,1,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
+	[1,0,0,2,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,1,1,1,1,1,1]
 ];
 
 var out_cube : GameObject;
+var player : GameObject;
 var line : GameObject;
 var bullet : GameObject;
 var main_camera : Camera;
-var select_pos : Vector3;
 
 /// 盤面の縦幅と横幅
 function get_size() : Vector2
@@ -23,10 +23,10 @@ function get_size() : Vector2
 	return Vector2(board.Length, board[0].Length);
 }
 
-/// 初期化のひとつ。board配列の内容にそって壁を配置する
-function create_pen()
+/// board配列の内容にそって駒を配置する
+function set_piece()
 {
- 	var pos:Vector3 = out_cube.transform.position;
+ 	var pos:Vector3 = Vector3(0, 0.5, 0);
  	
  	for(var x = 0; x < board.Length; x++)
  	{	
@@ -38,13 +38,17 @@ function create_pen()
 			{
 				Instantiate(out_cube,pos,out_cube.transform.rotation); 
 			}
+			if(board[x][z] == 2)
+			{
+				Instantiate(player,pos,player.transform.rotation); 
+			}
 			pos.z -= 1.0;
 		}
 		pos.x += 1.0;
 	}	
 }
 
-/// 初期化のひとつ。盤面の格子を引く
+/// 盤面に格子を引く
 function create_line()
 {
 	var n : int = get_size().x - 2;
@@ -68,7 +72,7 @@ function create_line()
 
 function Start () 
 {
-	create_pen();
+	set_piece();
 	create_line();
 }
 
