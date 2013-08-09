@@ -14,26 +14,41 @@ function Update ()
 	if (Input.GetButtonDown("Fire1")) 
 	{
 		// クリックしたら移動
-		chara_act();
+		click_area();
 	}
 }
 
+//斜めを除く1マス以内かどうか判定
 function one_square(cp : Vector2) : boolean
 {
-	Debug.Log("test");
-	Debug.Log(Mathf.Abs(cp.x - transform.position.x));
-	Debug.Log(Mathf.Abs(cp.y + transform.position.z));
-	
 	if(Mathf.Abs(cp.x - transform.position.x)  + Mathf.Abs(cp.y + transform.position.z) < 2)
 	{
 		return true;
 	}
-	
 	return false;
 }
 
+//指定マスの内容・座標により行動
+function chara_act(act : int, b: board, bp : Vector2)
+{
+	//0:移動,1:壁,2:プレイヤー,3:クワガタ,4:クワガタのしたい
+	if(act == 0)
+	{	
+		// きりのいい座標にするため、盤面座標から空間座標に変換し直す
+		transform.position = b.to_world_point(bp);
+	}
+	else if(act == 2)
+	{
+		//何もせずターン経過
+	}
+	else if(act == 3)
+	{
+		//クワガタに攻撃
+	}
+}
 
-function chara_act() 
+
+function click_area() 
 {
 	var b : board = floor.GetComponent(board);
 	
@@ -44,15 +59,9 @@ function chara_act()
 	
 	// カメラで変換した座標を盤面のXYに直す
 	var boardPoint = b.to_board_point(worldPoint);
-	//Debug.Log(boardPoint);
 	
-	//以降座標を元に行動を行う
-	if (one_square(boardPoint) && b.area_check(boardPoint))
-	{	
-		// var bul : GameObject = Instantiate(bullet, worldPoint, transform.rotation);		
-		// きりのいい座標にするため、盤面座標から空間座標に変換し直す
-		var charaPoint = b.to_world_point(boardPoint);
-		
-		transform.position = charaPoint;
+	if (one_square(boardPoint) && b.area_check(boardPoint) != -1)
+	{
+		chara_act(b.area_check(boardPoint), b, boardPoint);
 	}
 }

@@ -77,31 +77,31 @@ area_checkは判定と計算が混じってたので以下３つに処理を分�
 あとXZ座標をVector2というXYだけの構造体にまとめました
 */
 
-// 座標までキャラが移動していいか調べる
-function area_check(p : Vector2) : boolean
+// 座標位置内であれば配列内情報を返す
+function area_check(p : Vector2) : int
 {
-	return is_in_area(p) && !is_occupied(p);
+	if(is_in_area(p))
+	{
+		// 配列内情報を返す
+		return board[p.x][p.y];
+	}
+	//bord外の場合
+	return  -1;
 }
 
-// 座標にキャラがいるかどうか調べる
-function is_occupied(p : Vector2) : boolean
-{
-	return board[p.x][p.y] > 0;
-}
-
-// 座標が盤面内か調べる
+// 座標が配列内か調べる
 function is_in_area(p : Vector2) : boolean
 {
 	return 0 <= p.x && p.x < board.Length && 0 <= p.y && p.y < board[0].Length;
 }
 
-// 盤面座標を空間座標に変換する
+// 配列座標を空間座標に変換する
 function to_world_point(p : Vector2) : Vector3
 {
 	return Vector3(p.x, 0.5, -p.y);
 }
 
-// 空間座標を盤面座標に変換する
+// 空間座標を配列座標に変換する
 function to_board_point(position : Vector3) : Vector2
 {
 	return Vector2(Mathf.RoundToInt(position.x), -Mathf.RoundToInt(position.z));
