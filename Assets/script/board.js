@@ -5,17 +5,16 @@ var board =
 	[1,1,1,1,1,1,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
-	[1,0,0,2,0,0,1],
+	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,1,1,1,1,1,1]
 ];
 
 var out_cube : GameObject;
-var player : GameObject;
 var line : GameObject;
 var bullet : GameObject;
-var main_camera : Camera;
+
 
 /// 盤面の縦幅と横幅
 function get_size() : Vector2
@@ -24,7 +23,7 @@ function get_size() : Vector2
 }
 
 /// board配列の内容にそって駒を配置する
-function set_piece()
+function create_piece()
 {
  	var pos:Vector3 = Vector3(0, 0.5, 0);
  	
@@ -39,8 +38,8 @@ function set_piece()
 				Instantiate(out_cube,pos,out_cube.transform.rotation); 
 			}
 			if(board[x][z] == 2)
-			{
-				Instantiate(player,pos,player.transform.rotation); 
+ 			{
+ 				
 			}
 			pos.z -= 1.0;
 		}
@@ -72,7 +71,7 @@ function create_line()
 
 function Start () 
 {
-	set_piece();
+	create_piece();
 	create_line();
 }
 

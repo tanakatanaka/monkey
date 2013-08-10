@@ -6,7 +6,6 @@ var main_camera : Camera;
 
 function Start () 
 {
-	main_camera = floor.GetComponent(main_camera);
 	transform.position = Vector3(3, 0.5, -3);
 }
 
