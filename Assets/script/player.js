@@ -3,10 +3,12 @@
 var compass : int = 0;
 var floor : GameObject;
 var main_camera : Camera;
+private var b : board;
 
 function Start () 
 {
-	transform.position = Vector3(3, 0.5, -3);
+	b = floor.GetComponent(board);
+	transform.position = b.get_player_area();
 }
 
 function Update () 
@@ -21,7 +23,8 @@ function Update ()
 //斜めを除く1マス以内かどうか判定
 function one_square(cp : Vector2) : boolean
 {
-	if(Mathf.Abs(cp.x - transform.position.x)  + Mathf.Abs(cp.y + transform.position.z) < 2)
+	var pp = b.to_board_point(transform.position);
+	if(Mathf.Abs(cp.x - pp.x)  + Mathf.Abs(cp.y - pp.y) < 2)
 	{
 		return true;
 	}
@@ -29,12 +32,13 @@ function one_square(cp : Vector2) : boolean
 }
 
 //指定マスの内容・座標により行動
-function chara_act(act : int, b: board, bp : Vector2)
+function chara_act(act : int, bp : Vector2)
 {
 	//0:移動,1:壁,2:プレイヤー,3:クワガタ,4:クワガタのしたい
 	if(act == 0)
 	{	
 		// きりのいい座標にするため、盤面座標から空間座標に変換し直す
+		b.move_record(bp, 2);
 		transform.position = b.to_world_point(bp);
 	}
 	else if(act == 2)
@@ -50,8 +54,6 @@ function chara_act(act : int, b: board, bp : Vector2)
 
 function click_area() 
 {
-	var b : board = floor.GetComponent(board);
-	
 	// マウスから
 	var screenPoint = Input.mousePosition;
 	screenPoint.z = 8;
@@ -62,6 +64,6 @@ function click_area()
 	
 	if (one_square(boardPoint) && b.area_check(boardPoint) != -1)
 	{
-		chara_act(b.area_check(boardPoint), b, boardPoint);
+		chara_act(b.area_check(boardPoint), boardPoint);
 	}
 }

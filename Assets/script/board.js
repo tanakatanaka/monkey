@@ -5,7 +5,7 @@ var board =
 	[1,1,1,1,1,1,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
+	[1,0,0,2,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,1,1,1,1,1,1]
@@ -14,7 +14,7 @@ var board =
 var out_cube : GameObject;
 var line : GameObject;
 var bullet : GameObject;
-
+private var player_area : Vector2;
 
 /// 盤面の縦幅と横幅
 function get_size() : Vector2
@@ -32,14 +32,14 @@ function create_piece()
  		pos.z = out_cube.transform.position.z;
 
  		for(var z = 0; z < board[x].Length; z++)
-		{
+		{ 
 			if(board[x][z] == 1)
 			{
 				Instantiate(out_cube,pos,out_cube.transform.rotation); 
 			}
-			if(board[x][z] == 2)
- 			{
- 				
+			else if(board[x][z] == 2)
+			{
+				player_area = Vector2(x,z);
 			}
 			pos.z -= 1.0;
 		}
@@ -80,6 +80,21 @@ area_checkは判定と計算が混じってたので以下３つに処理を分�
 あとXZ座標をVector2というXYだけの構造体にまとめました
 */
 
+//playerの空間座標を返す
+function get_player_area() : Vector3
+{
+	return to_world_point(player_area);
+}
+
+//移動前の配列を0(何もない)にして,現在の位置を配列に記録
+function move_record(p : Vector2, c_val : int)
+{
+	board[player_area.x][player_area.y] = 0;
+	player_area = p;
+	board[player_area.x][player_area.y] = c_val;
+}
+
+
 // 座標位置内であれば配列内情報を返す
 function area_check(p : Vector2) : int
 {
@@ -97,6 +112,7 @@ function is_in_area(p : Vector2) : boolean
 {
 	return 0 <= p.x && p.x < board.Length && 0 <= p.y && p.y < board[0].Length;
 }
+
 
 // 配列座標を空間座標に変換する
 function to_world_point(p : Vector2) : Vector3
