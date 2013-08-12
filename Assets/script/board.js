@@ -3,7 +3,7 @@
 var board = 
 [
 	[1,1,1,1,1,1,1],
-	[1,0,0,0,0,0,1],
+	[1,0,0,3,0,0,1],
 	[1,0,0,0,0,0,1],
 	[1,0,0,2,0,0,1],
 	[1,0,0,0,0,0,1],
@@ -15,6 +15,7 @@ var out_cube : GameObject;
 var line : GameObject;
 var bullet : GameObject;
 private var player_area : Vector2;
+private var stag_area : Vector2;
 
 /// 盤面の縦幅と横幅
 function get_size() : Vector2
@@ -40,6 +41,10 @@ function create_piece()
 			else if(board[x][z] == 2)
 			{
 				player_area = Vector2(x,z);
+			}
+			else if(board[x][z] == 3)
+			{
+				stag_area = Vector2(x,z);
 			}
 			pos.z -= 1.0;
 		}
@@ -85,6 +90,13 @@ function get_player_area() : Vector3
 {
 	return to_world_point(player_area);
 }
+
+//stagの空間座標を返す
+function get_stag_area() : Vector3
+{
+	return to_world_point(stag_area);
+}
+
 
 //移動前の配列を0(何もない)にして,現在の位置を配列に記録
 function move_record(p : Vector2, c_val : int)
