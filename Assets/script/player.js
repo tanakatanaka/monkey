@@ -62,7 +62,7 @@ function click_area()
 	// カメラで変換した座標を盤面のXYに直す
 	var boardPoint = b.to_board_point(worldPoint);
 	
-	if (one_square(boardPoint) && b.area_check(boardPoint) != -1)
+	if (one_square(boardPoint))
 	{
 		chara_act(b.area_check(boardPoint), boardPoint);
 	}
