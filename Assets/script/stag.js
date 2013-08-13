@@ -16,31 +16,29 @@ function rota(new_compass : int)
 	compass = new_compass;
 }
 
-function rote_plus() : Vector2
+function around_check(p_2d : Vector2, s_2d : Vector2) : int
 {
-	if(compass == 0)
-	{
-		return Vector2(0,1);
-	}
-	else if(compass == 1)
-	{
-		return Vector2(1,0);
-	}
-	else if(compass == 2)
-	{
-		return Vector2(0,-1);
-	}
+	var x = p_2d.x - s_2d .x;
+	var y = p_2d.y - s_2d .y;
 	
-	return Vector2(-1,0);
+	if(y == -1){return 0;}
+	else if(x == 1){return 1;}
+	else if(y == -1){return 2;}
+	else if(x == -1){return 3;}
+	
+	return -1;
 }
 
 function thinking(p_2d : Vector2, s_2d : Vector2) : int
 {
+	/*
 	if(s_2d == p_2d + rote_plus())
 	{
 		Debug.Log("ore no mae");
 	}
+
 	return 1;
+	*/
 } 
 
 function Update () 
@@ -48,9 +46,10 @@ function Update ()
 	var p_2d : Vector2 = b.to_board_point(b.get_player_area());
 	var s_2d : Vector2 = b.to_board_point(transform.position); 
 	
-	if(Mathf.Abs(p_2d.x - s_2d .x) < 2 || Mathf.Abs(p_2d.y - s_2d .y) < 2)
+	Debug.Log(p_2d);
+	
+	if(around_check(p_2d, s_2d) != -1)
 	{	
-		Debug.Log("gagaga");
 		thinking(s_2d, s_2d);
 	}
 }
