@@ -1,6 +1,5 @@
 #pragma strict
 
-var compass : int = 0;
 var floor : GameObject;
 private var b : board;
 
@@ -10,12 +9,6 @@ function Start ()
 	transform.position = b.get_stag_area();
 	Debug.Log("stagg");
 	Debug.Log(transform.position);
-}
-
-function rota(new_compass : int)
-{
-	transform.rotation.y = new_compass * 90.0;
-	compass = new_compass;
 }
 
 function around_check(p_2d : Vector2, s_2d : Vector2) : int
@@ -43,15 +36,35 @@ function thinking(p_2d : Vector2, s_2d : Vector2) : int
 	*/
 } 
 
+function rote_plus() : Vector3
+{
+	var compass = transform.rotation.y /90;
+
+	if(compass == 0) { return Vector3(0,0,1); }
+	else if(compass == 1){ return Vector3(1,0,0); }
+	else if(compass == 2){ return Vector3(0,0,-1); }
+	return Vector3(-1,0,0);
+}
+
+
 function Update () 
 {
 	var p_2d : Vector2 = b.to_board_point(b.get_player_area());
 	var s_2d : Vector2 = b.to_board_point(transform.position); 
 	
-	Debug.Log(p_2d);
-	
 	if(around_check(p_2d, s_2d) != -1)
 	{	
+		Debug.Log("tonari iru");
 		thinking(s_2d, s_2d);
 	}
+	else
+	{
+		var destination = transform.position + rote_plus();
+		var result = b.area_check(b.to_board_point(destination));
+		if(result != -1 && result != 1)
+		{	
+			transform.position = destination;
+		}
+	}
 }
+
