@@ -8,6 +8,8 @@ function Start ()
 {
 	b = floor.GetComponent(board);
 	transform.position = b.get_stag_area();
+	Debug.Log("stagg");
+	Debug.Log(transform.position);
 }
 
 function rota(new_compass : int)

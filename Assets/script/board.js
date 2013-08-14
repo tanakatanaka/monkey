@@ -28,28 +28,28 @@ function create_piece()
 {
  	var pos:Vector3 = Vector3(0, 0.5, 0);
  	
- 	for(var x = 0; x < board.Length; x++)
+ 	for(var z = 0; z < board.Length; z++)
  	{	
- 		pos.z = out_cube.transform.position.z;
+ 		pos.x = out_cube.transform.position.x;
 
- 		for(var z = 0; z < board[x].Length; z++)
+ 		for(var x = 0; x < board[z].Length; x++)
 		{ 
-			if(board[x][z] == 1)
+			if(board[z][x] == 1)
 			{
 				Instantiate(out_cube,pos,out_cube.transform.rotation); 
 			}
-			else if(board[x][z] == 2)
+			else if(board[z][x] == 2)
 			{
 				player_area = Vector2(x,z);
 			}
-			else if(board[x][z] == 3)
+			else if(board[z][x] == 3)
 			{
-				Debug.Log("test");
+				Debug.Log("bord");
 				stag_area = Vector2(x,z);
 			}
-			pos.z -= 1.0;
+			pos.x += 1.0;
 		}
-		pos.x += 1.0;
+		pos.z -= 1.0;
 	}	
 }
 
@@ -102,9 +102,11 @@ function get_stag_area() : Vector3
 //移動前の配列を0(何もない)にして,現在の位置を配列に記録
 function move_record(p : Vector2, c_val : int)
 {
-	board[player_area.x][player_area.y] = 0;
+	//配列ではyがたてxが横なのでyxの順番で
+	
+	board[player_area.y][player_area.x] = 0;
 	player_area = p;
-	board[player_area.x][player_area.y] = c_val;
+	board[player_area.y][player_area.x] = c_val;
 }
 
 
@@ -114,7 +116,7 @@ function area_check(p : Vector2) : int
 	if(is_in_area(p))
 	{
 		// 配列内情報を返す
-		return board[p.x][p.y];
+		return board[p.y][p.x];
 	}
 	//bord外の場合
 	return  -1;
@@ -136,7 +138,7 @@ function to_world_point(p : Vector2) : Vector3
 // 空間座標を配列座標に変換する
 function to_board_point(position : Vector3) : Vector2
 {
-	return Vector2(Mathf.RoundToInt(position.x), -Mathf.RoundToInt(position.z));
+	return Vector2(Mathf.RoundToInt(position.x),-Mathf.RoundToInt(position.z));
 }
 
 function Update () 

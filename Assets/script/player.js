@@ -47,7 +47,7 @@ function chara_act(act : int, bp : Vector2)
 	}
 	else if(act == 3)
 	{
-		//クワガタに攻撃
+		Debug.Log("kwg attack");
 	}
 }
 
@@ -61,9 +61,11 @@ function click_area()
 	
 	// カメラで変換した座標を盤面のXYに直す
 	var boardPoint = b.to_board_point(worldPoint);
+
 	
 	if (one_square(boardPoint))
 	{
 		chara_act(b.area_check(boardPoint), boardPoint);
 	}
+	
 }
