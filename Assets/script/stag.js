@@ -13,13 +13,25 @@ function Start ()
 
 function around_check(p_2d : Vector2, s_2d : Vector2) : int
 {
-	var x = p_2d.x - s_2d .x;
-	var y = p_2d.y - s_2d .y;
+	var x = p_2d.x - s_2d.x;
+	var y = p_2d.y - s_2d.y;
 	
-	if(y == -1){return 0;}
-	else if(x == 1){return 1;}
-	else if(y == -1){return 2;}
-	else if(x == -1){return 3;}
+	if(y == 1 && x == 0)
+	{
+		return 0;
+	}
+	else if(y == 0 && x == 1)
+	{
+		return 1;
+	}
+	else if(y == -1 && x == 0)
+	{
+		return 2;
+	}
+	else if(y == 0 && x == -1)
+	{
+		return 3;
+	}
 	
 	return -1;
 }
@@ -52,19 +64,25 @@ function Update ()
 	var p_2d : Vector2 = b.to_board_point(b.get_player_area());
 	var s_2d : Vector2 = b.to_board_point(transform.position); 
 	
-	if(around_check(p_2d, s_2d) != -1)
+	var relation = around_check(p_2d, s_2d);
+	Debug.Log(relation);
+	
+	if(relation != -1)
 	{	
 		Debug.Log("tonari iru");
 		thinking(s_2d, s_2d);
 	}
 	else
 	{
+		/*
 		var destination = transform.position + rote_plus();
 		var result = b.area_check(b.to_board_point(destination));
+		
 		if(result != -1 && result != 1)
 		{	
 			transform.position = destination;
 		}
+		*/
 	}
 }
 
