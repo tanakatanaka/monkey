@@ -100,15 +100,15 @@ function get_stag_area() : Vector3
 
 
 //移動前の配列を0(何もない)にして,現在の位置を配列に記録
-function move_record(p : Vector2, c_val : int)
+function move_record(last_p : Vector2, presant_p : Vector2, c_val : int)
 {
 	//配列ではyがたてxが横なのでyxの順番で
 	
-	board[player_area.y][player_area.x] = 0;
-	player_area = p;
-	board[player_area.y][player_area.x] = c_val;
+	board[last_p.y][last_p.x] = 0;
+	if(c_val == 2){ player_area = presant_p; }
+	if(c_val == 3){ stag_area = presant_p; }
+	board[presant_p.y][presant_p.x] = c_val;
 }
-
 
 // 座標位置内であれば配列内情報を返す
 function area_check(p : Vector2) : int

@@ -1,6 +1,5 @@
 #pragma strict
 
-var compass : int = 0;
 var floor : GameObject;
 var main_camera : Camera;
 private var b : board;
@@ -38,7 +37,7 @@ function chara_act(act : int, bp : Vector2)
 	if(act == 0)
 	{	
 		// きりのいい座標にするため、盤面座標から空間座標に変換し直す
-		b.move_record(bp, 2);
+		b.move_record(b.to_board_point(transform.position), bp, 2);
 		transform.position = b.to_world_point(bp);
 	}
 	else if(act == 2)
@@ -47,7 +46,7 @@ function chara_act(act : int, bp : Vector2)
 	}
 	else if(act == 3)
 	{
-		Debug.Log("kwg attack");
+		Debug.Log("attack");
 	}
 }
 

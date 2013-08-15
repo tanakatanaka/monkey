@@ -75,12 +75,15 @@ function Update ()
 	{
 		//周りにplayerがいなければ前に進む
 		var destination = transform.position + rote_plus();
-		var result = b.area_check(b.to_board_point(destination));
+		var bord_destination = b.to_board_point(destination);
+		var result = b.area_check(bord_destination);
 		
-		if(result != -1 && result != 1)
+		if(result != 1)
 		{	
+			b.move_record(b.to_board_point(transform.position), bord_destination, 3);
 			transform.position = destination;
 		}
+		else{ GameObject.FindWithTag("block").SendMessage("damege_block"); }
 	}
 }
 
