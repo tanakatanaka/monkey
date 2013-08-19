@@ -1,13 +1,18 @@
 #pragma strict
-var turn_count : int = 0;
+var turn_count : int = 1;
 
 
-function Start () 
+function Get_turn()
 {
-	
+	return this.turn_count;
 }
 
-function Update () 
+function turn_up()
+{
+	this.turn_count++;
+}
+
+function Update ()
 {
 	
 }

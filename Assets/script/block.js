@@ -1,6 +1,6 @@
 #pragma strict
 
-var life : int = 4;
+var life : int = 3;
 
 function Start () 
 {
@@ -14,8 +14,6 @@ function damege_block()
 	{
 		Destroy(gameObject);
 	}
-	
- 
 }
 
 function Update () 

@@ -2,20 +2,26 @@
 
 var floor : GameObject;
 var main_camera : Camera;
+var master : GameObject;
+private var g : game;
 private var b : board;
 
 function Start () 
 {
+	g = master.GetComponent(game);
 	b = floor.GetComponent(board);
 	transform.position = b.get_player_area();
 }
 
 function Update () 
 {
-	if (Input.GetButtonDown("Fire1")) 
+	if(g.Get_turn() % 2 == 1)
 	{
-		// クリックしたら移動
-		click_area();
+		if (Input.GetButtonDown("Fire1")) 
+		{
+			// クリックしたら移動
+			click_area();
+		}
 	}
 }
 
@@ -48,6 +54,8 @@ function chara_act(act : int, bp : Vector2)
 	{
 		Debug.Log("attack");
 	}
+	
+	g.turn_up();
 }
 
 

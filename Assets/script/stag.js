@@ -2,9 +2,12 @@
 
 var floor : GameObject;
 private var b : board;
+var master : GameObject;
+private var g : game;
 
 function Start () 
 {
+	g = master.GetComponent(game);
 	b = floor.GetComponent(board);
 	transform.position = b.get_stag_area();
 }
@@ -60,7 +63,7 @@ function thinking(relation : int) : int
 	*/
 } 
 
-function Update () 
+function act_stag()
 {
 	var p_2d : Vector2 = b.to_board_point(b.get_player_area());
 	var s_2d : Vector2 = b.to_board_point(transform.position); 
@@ -83,7 +86,21 @@ function Update ()
 			b.move_record(b.to_board_point(transform.position), bord_destination, 3);
 			transform.position = destination;
 		}
-		else{ GameObject.FindWithTag("block").SendMessage("damege_block"); }
+		else
+		{ 
+			GameObject.FindWithTag("block").SendMessage("damege_block"); 
+		}
+	}
+	
+	g.turn_up();
+}
+
+
+function Update () 
+{
+	if(g.Get_turn() % 2 == 0)
+	{
+		act_stag();
 	}
 }
 

@@ -14,6 +14,7 @@ var board =
 var out_cube : GameObject;
 var line : GameObject;
 var bullet : GameObject;
+private var blocks : GameObject;
 private var player_area : Vector2;
 private var stag_area : Vector2;
 
