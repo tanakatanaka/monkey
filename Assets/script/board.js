@@ -14,7 +14,7 @@ var board =
 var out_cube : GameObject;
 var line : GameObject;
 var bullet : GameObject;
-private var blocks : GameObject;
+private var blocks : GameObject[];
 private var player_area : Vector2;
 private var stag_area : Vector2;
 
@@ -28,6 +28,8 @@ function get_size() : Vector2
 function create_piece()
 {
  	var pos:Vector3 = Vector3(0, 0.5, 0);
+ 	blocks = new GameObject[24];
+ 	var block_count = 0;
  	
  	for(var z = 0; z < board.Length; z++)
  	{	
@@ -37,7 +39,8 @@ function create_piece()
 		{ 
 			if(board[z][x] == 1)
 			{
-				Instantiate(out_cube,pos,out_cube.transform.rotation); 
+				blocks[block_count] = Instantiate(out_cube,pos,out_cube.transform.rotation); 
+				block_count++;
 			}
 			else if(board[z][x] == 2)
 			{
@@ -135,11 +138,39 @@ function to_world_point(p : Vector2) : Vector3
 {
 	return Vector3(p.x, 0.5, -p.y);
 }
-
+	
 // 空間座標を配列座標に変換する
 function to_board_point(position : Vector3) : Vector2
 {
 	return Vector2(Mathf.RoundToInt(position.x),-Mathf.RoundToInt(position.z));
+}
+
+//指定配列座標を攻撃する
+function atk_point(p : Vector2)
+{
+	var content = area_check(p);
+	
+	if(content ==  1)
+	{
+		var exist = blocks[(p.y * 7) + p.x].gameObject;
+		
+		if(exist != null)
+		{
+			blocks[(p.y * 7) + p.x].SendMessage("damege_block");
+		} 
+		
+		if(exist == null)
+		{
+			move_record(p, p, 0);
+		}
+		
+		
+		Debug.Log(board[p.y][p.x]);
+	}
+	else if(content ==  2)
+	{
+		Debug.Log("kougeki");
+	}
 }
 
 function Update () 

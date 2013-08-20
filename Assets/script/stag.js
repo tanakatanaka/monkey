@@ -87,8 +87,8 @@ function act_stag()
 			transform.position = destination;
 		}
 		else
-		{ 
-			GameObject.FindWithTag("block").SendMessage("damege_block"); 
+		{
+			b.atk_point(bord_destination);
 		}
 	}
 	
