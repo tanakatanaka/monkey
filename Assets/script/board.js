@@ -154,14 +154,12 @@ function atk_point(p : Vector2)
 	{
 		Debug.Log("kougeki_stag");
 		
-		var exist = blocks[(p.y * 7) + p.x].gameObject;
-		
-		if(exist != null)
+		if(blocks[(p.y * 7) + p.x].gameObject != null)
 		{
 			blocks[(p.y * 7) + p.x].SendMessage("damege_block");
 		} 
 		
-		if(exist == null)
+		if(blocks[(p.y * 7) + p.x].gameObject == null)
 		{
 			move_record(p, p, 0);
 		}
