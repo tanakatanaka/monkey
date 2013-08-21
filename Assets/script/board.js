@@ -152,6 +152,8 @@ function atk_point(p : Vector2)
 	
 	if(content ==  1)
 	{
+		Debug.Log("kougeki_stag");
+		
 		var exist = blocks[(p.y * 7) + p.x].gameObject;
 		
 		if(exist != null)

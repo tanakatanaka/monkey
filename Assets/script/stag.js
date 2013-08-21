@@ -88,7 +88,6 @@ function act_stag()
 		}
 		else
 		{
-			Debug.Log("kougeki_stag");
 			b.atk_point(bord_destination);
 		}
 	}
