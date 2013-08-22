@@ -13,7 +13,7 @@ var board =
 
 var out_cube : GameObject;
 var line : GameObject;
-var bullet : GameObject;
+var dead_stag : GameObject;
 private var blocks : GameObject[];
 private var player_area : Vector2;
 private var stag_area : Vector2;
@@ -132,6 +132,11 @@ function is_in_area(p : Vector2) : boolean
 	return 0 <= p.x && p.x < board.Length && 0 <= p.y && p.y < board[0].Length;
 }
 
+//stagが壁の位置か調べる
+function is_in_wall_area(p : Vector2) : boolean
+{
+	return p.x < 1 || p.x > 5 || p.y < 1 || p.y > 5;	
+}
 
 // 配列座標を空間座標に変換する
 function to_world_point(p : Vector2) : Vector3
@@ -146,31 +151,31 @@ function to_board_point(position : Vector3) : Vector2
 }
 
 //指定配列座標を攻撃する
-function atk_point(p : Vector2)
+function atk_point(p : Vector2) : boolean
 {
 	var content = area_check(p);
 	
 	if(content ==  1)
 	{
-		Debug.Log("kougeki_stag");
-		
 		if(blocks[(p.y * 7) + p.x].gameObject != null)
 		{
 			blocks[(p.y * 7) + p.x].SendMessage("damege_block");
 		} 
-		
-		if(blocks[(p.y * 7) + p.x].gameObject == null)
-		{
-			move_record(p, p, 0);
+		else
+		{	
+			move_record(p, p, 5);
+			return true;
 		}
-		
-		
-		Debug.Log(board[p.y][p.x]);
 	}
-	else if(content ==  2)
+	else if(content ==  3)
 	{
-		Debug.Log("kougeki");
+		GameObject.FindWithTag("stag").SendMessage("stag_dead");
+		move_record(p, p, 1);
+		var pos = to_world_point(p);
+		Instantiate(dead_stag,pos,out_cube.transform.rotation); 
 	}
+	
+	return false;
 }
 
 function Update () 

@@ -52,7 +52,8 @@ function chara_act(act : int, bp : Vector2)
 	}
 	else if(act == 3)
 	{
-		Debug.Log("attack");
+		//攻撃
+		b.atk_point(bp);
 	}
 	
 	g.turn_up();

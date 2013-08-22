@@ -80,19 +80,31 @@ function act_stag()
 		var destination = transform.position + rote_plus();
 		var bord_destination = b.to_board_point(destination);
 		var result = b.area_check(bord_destination);
+				
+		//移動先resultの内容により行動する
+		if(result == 1)
+		{
+			if(b.atk_point(bord_destination))
+			{
+				result = 5;
+			}
+		}
 		
-		if(result != 1)
+		if(result == 0 || result == 5)
 		{	
 			b.move_record(b.to_board_point(transform.position), bord_destination, 3);
 			transform.position = destination;
 		}
-		else
-		{
-			b.atk_point(bord_destination);
-		}
+		
 	}
 	
 	g.turn_up();
+}
+
+function stag_dead()
+{
+	Debug.Log("ore sinda");
+	Destroy(this.gameObject);
 }
 
 
@@ -102,5 +114,11 @@ function Update ()
 	{
 		act_stag();
 	}
+	
+	if(b.is_in_wall_area(b.to_board_point(transform.position)))
+	{
+		//Debug.Log("Game over");
+	}
+	
 }
 
