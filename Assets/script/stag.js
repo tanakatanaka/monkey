@@ -2,12 +2,12 @@
 
 var floor : GameObject;
 private var b : board;
-var master : GameObject;
+var turn : GameObject;
 private var g : game;
 
 function Start () 
 {
-	g = master.GetComponent(game);
+	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
 	transform.position = b.get_stag_area();
 }

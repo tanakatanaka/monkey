@@ -48,7 +48,7 @@ function create_piece()
 			}
 			else if(board[z][x] == 3)
 			{
-				Debug.Log("bord");
+				GameObject.FindWithTag("manage_stag").SendMessage("make_stag", Vector3(x,0.5,z));
 				stag_area = Vector2(x,z);
 			}
 			pos.x += 1.0;

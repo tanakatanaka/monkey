@@ -2,13 +2,13 @@
 
 var floor : GameObject;
 var main_camera : Camera;
-var master : GameObject;
+var turn : GameObject;
 private var g : game;
 private var b : board;
 
 function Start () 
 {
-	g = master.GetComponent(game);
+	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
 	transform.position = b.get_player_area();
 }
