@@ -16,7 +16,7 @@ var line : GameObject;
 var dead_stag : GameObject;
 private var blocks : GameObject[];
 private var player_area : Vector2;
-private var stag_area : Vector2;
+private var stags_area : Vector2[];
 
 /// 盤面の縦幅と横幅
 function get_size() : Vector2
@@ -29,8 +29,10 @@ function create_piece()
 {
  	var pos:Vector3 = Vector3(0, 0.5, 0);
  	blocks = new GameObject[24];
+ 	stags_area = new Vector2[4];
  	var block_count = 0;
- 	
+ 	var stag_count = 0;
+  	
  	for(var z = 0; z < board.Length; z++)
  	{	
  		pos.x = out_cube.transform.position.x;
@@ -48,8 +50,9 @@ function create_piece()
 			}
 			else if(board[z][x] == 3)
 			{
-				GameObject.FindWithTag("manage_stag").SendMessage("make_stag", Vector3(x,0.5,z));
-				stag_area = Vector2(x,z);
+				GameObject.FindWithTag("manage_stag").SendMessage("make_stag", Vector3(x,0.5,-z) );
+				stags_area[stag_count] = Vector2(x,z);
+				stag_count++;
 			}
 			pos.x += 1.0;
 		}
@@ -95,13 +98,11 @@ function get_player_area() : Vector3
 {
 	return to_world_point(player_area);
 }
-
-//stagの空間座標を返す
-function get_stag_area() : Vector3
+//指定番目のstagの空間座標を返す
+function get_stag_area(num : int) : Vector3
 {
-	return to_world_point(stag_area);
+	return to_world_point(stags_area[num]);
 }
-
 
 //移動前の配列を0(何もない)にして,現在の位置を配列に記録
 function move_record(last_p : Vector2, presant_p : Vector2, c_val : int)
@@ -110,7 +111,7 @@ function move_record(last_p : Vector2, presant_p : Vector2, c_val : int)
 	
 	board[last_p.y][last_p.x] = 0;
 	if(c_val == 2){ player_area = presant_p; }
-	if(c_val == 3){ stag_area = presant_p; }
+	if(c_val == 3){ stags_area[0] = presant_p; }
 	board[presant_p.y][presant_p.x] = c_val;
 }
 
