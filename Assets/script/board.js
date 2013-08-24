@@ -177,10 +177,16 @@ function atk_point(p : Vector2) : boolean
 	}
 	else if(content ==  3)
 	{
-		GameObject.FindWithTag("stag").SendMessage("stag_dead");
-		move_record(p, p, 1);
-		var pos = to_world_point(p);
-		Instantiate(dead_stag,pos,out_cube.transform.rotation); 
+		for(var i = 0; i < stags_area.Length; i++)
+		{
+			if(p == stags_area[i])
+			{
+				GameObject.FindWithTag("manage_stag").SendMessage("stag_dead", i);
+				move_record(p, p, 4);
+				Instantiate(dead_stag,to_world_point(p),out_cube.transform.rotation);
+				break;
+			}
+		}
 	}
 	
 	return false;

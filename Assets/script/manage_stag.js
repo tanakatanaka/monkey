@@ -24,6 +24,11 @@ function make_stag(p : Vector3)
 	count++;
 }
 
+function stag_dead(i : int)
+{
+	stags[i].SendMessage("set_dead");
+}
+
 //とりあえず回りを探索させる
 function thinking() : int
 {
@@ -52,7 +57,10 @@ function Update ()
 	{
 		for(var i = 0; i  < this.count; i++)
 		{
-			stag_act(i);
+			if(stags[i] != null)
+			{
+				stag_act(i);
+			}
 		}
 		
 		g.turn_up();

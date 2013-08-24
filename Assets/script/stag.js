@@ -1,5 +1,10 @@
 #pragma strict
 
+function set_dead()
+{
+	Destroy(this.gameObject);
+	Debug.Log("im dead");
+}
 
 function set_stag_positon(p : Vector3)
 {
