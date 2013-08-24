@@ -14,7 +14,6 @@ function Start ()
 {
 	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
-	
 	stags = new GameObject[4];
 }
 
@@ -25,13 +24,25 @@ function make_stag(p : Vector3)
 	count++;
 }
 
+//とりあえず回りを探索させる
+function thinking() : int
+{
+	return 0;
+}
+
 function stag_act(i : int)
 {
-	Debug.Log(i);
-	var area = b.get_stag_area(i);
-	area.z += 1.0;
-	stags[i].SendMessage("set_stag_positon", area);
-	//今bord側に移動を記録させてないので初動のみ
+	var answer = thinking();
+	
+	//移動か攻撃
+	if(answer == 0)
+	{
+		var area = b.get_stag_area(i);
+		area.z += 1.0;
+		//移動して記録bordに記録する
+		stags[i].SendMessage("set_stag_positon", area);
+		b.stag_move_record(b.to_board_point(area), i);
+	}
 }
 
 

@@ -7,7 +7,7 @@ var board =
 	[1,0,0,0,0,0,1],
 	[1,0,3,2,0,0,1],
 	[1,0,0,0,0,0,1],
-	[1,0,0,0,0,0,1],
+	[1,0,0,0,3,0,1],
 	[1,1,1,1,1,1,1]
 ];
 
@@ -110,9 +110,16 @@ function move_record(last_p : Vector2, presant_p : Vector2, c_val : int)
 	//配列ではyがたてxが横なのでyxの順番で
 	
 	board[last_p.y][last_p.x] = 0;
-	if(c_val == 2){ player_area = presant_p; }
-	if(c_val == 3){ stags_area[0] = presant_p; }
+	if(c_val == 2){ player_area = presant_p; }	
 	board[presant_p.y][presant_p.x] = c_val;
+}
+//stagの移動前の配列を0にして,現在の位置を配列に記録(stag.only)
+function stag_move_record(presant_p : Vector2, num : int)
+{
+	board[stags_area[num].y][stags_area[num].x] = 0;
+	stags_area[num] = presant_p;
+	board[presant_p.y][presant_p.x] = 3;
+	
 }
 
 // 座標位置内であれば配列内情報を返す
