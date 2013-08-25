@@ -46,10 +46,6 @@ function chara_act(act : int, bp : Vector2)
 		b.move_record(b.to_board_point(transform.position), bp, 2);
 		transform.position = b.to_world_point(bp);
 	}
-	else if(act == 2)
-	{
-		//何もせずターン経過
-	}
 	else if(act == 3)
 	{
 		//攻撃

@@ -2,7 +2,7 @@
 
 function set_dead()
 {
-	Destroy(this.gameObject);
+	DestroyImmediate(this.gameObject);
 	Debug.Log("im dead");
 }
 

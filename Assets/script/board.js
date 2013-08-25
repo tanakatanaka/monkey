@@ -169,10 +169,10 @@ function atk_point(p : Vector2) : boolean
 		{
 			blocks[(p.y * 7) + p.x].SendMessage("damege_block");
 		} 
-		else
+		
+		if(blocks[(p.y * 7) + p.x].gameObject == null)
 		{	
-			move_record(p, p, 5);
-			return true;
+			move_record(p, p, 0);
 		}
 	}
 	else if(content ==  3)
@@ -188,8 +188,6 @@ function atk_point(p : Vector2) : boolean
 			}
 		}
 	}
-	
-	return false;
 }
 
 function Update () 

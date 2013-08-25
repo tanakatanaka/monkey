@@ -10,6 +10,7 @@ var stag : GameObject;
 private var stags : GameObject[];
 var	count : int = 0;
 
+
 function Start () 
 {
 	g = turn.GetComponent(game);
@@ -29,25 +30,77 @@ function stag_dead(i : int)
 	stags[i].SendMessage("set_dead");
 }
 
-//とりあえず回りを探索させる
-function thinking() : int
+function hougaku_plus(point : int) :Vector2 
 {
+	if(point == 0){return Vector2(0,-1);}
+	else if(point == 1){return Vector2(1,0); }
+	else if(point == 2){return Vector2(0,1);}
+	else {return Vector2(-1,0);}
+}
+
+//上下左右に何があるかを返す
+function around_check(p : Vector2, houi : int, i : int) : int
+{
+	var point : int = ((stags[i].transform.rotation.y % 4) + houi) % 4;
+	return b.area_check(p + hougaku_plus(point));	
+}
+
+function thinking(p : Vector2, i : int) : int
+{
+	//前を探索
+	var front = around_check(p, 0, i);
+	
+	if(front == 0){ return 1; }
+	else if(front == 2) { return 0; }
+	else
+	{
+		//前がだめなとき左右下に何があるか確認
+		var right = around_check(p, 1, i);
+		var down = around_check(p, 2, i);
+		var left = around_check(p, 3, i);
+		
+		if(front == 1 && right != 2 && down != 2 && left != 2) { return 0;}
+		else
+		{
+			return 2;
+		}
+	}
+	
+	
+	
 	return 0;
 }
 
 function stag_act(i : int)
 {
-	var answer = thinking();
+	var area = b.get_stag_area(i);
+	var answer = thinking(b.to_board_point(area), i);
 	
-	//移動か攻撃
+	//攻撃・移動・方向転換
 	if(answer == 0)
 	{
-		var area = b.get_stag_area(i);
-		area.z += 1.0;
+		//攻撃する
+		var atk_area = area + b.to_world_point(hougaku_plus(stags[i].transform.rotation.y % 4));
+		b.atk_point(b.to_board_point(atk_area));
+	}
+	else if(answer == 1)
+	{
 		//移動して記録bordに記録する
+		area += b.to_world_point(hougaku_plus(stags[i].transform.rotation.y % 4));
 		stags[i].SendMessage("set_stag_positon", area);
 		b.stag_move_record(b.to_board_point(area), i);
 	}
+	else if(answer == 2)
+	{
+		Debug.Log("houkou tenkan");
+	}
+	
+	
+	if(b.is_in_wall_area(b.to_board_point(area)))
+	{
+		Debug.Log("game over");
+	}
+	
 }
 
 
