@@ -22,6 +22,7 @@ function make_stag(p : Vector3)
 {
 	//位置情報をももらい配列に固体をいれ作成
 	stags[count] = Instantiate(stag,p,stag.transform.rotation);
+	stags[count].transform.rotation.eulerAngles.y = 90;
 	count++;
 }
 
@@ -41,7 +42,10 @@ function hougaku_plus(point : int) :Vector2
 //上下左右に何があるかを返す
 function around_check(p : Vector2, houi : int, i : int) : int
 {
-	var point : int = ((stags[i].transform.rotation.y % 4) + houi) % 4;
+	Debug.Log("nemurenai");
+	Debug.Log( Mathf.Round( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 )  + houi );
+
+	var point : int = ( Mathf.Round( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 )  + houi ) % 4;
 	return b.area_check(p + hougaku_plus(point));	
 }
 
@@ -87,13 +91,13 @@ function stag_act(i : int)
 	if(answer == 0)
 	{
 		//攻撃する
-		var atk_area = area + b.to_world_point(hougaku_plus(stags[i].transform.rotation.y % 4));
+		var atk_area = area + b.to_world_point(hougaku_plus( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 ));
 		b.atk_point(b.to_board_point(atk_area));
 	}
 	else if(answer == 1)
 	{
 		//移動して記録bordに記録する
-		area += b.to_world_point(hougaku_plus(stags[i].transform.rotation.y % 4));
+		area += b.to_world_point(hougaku_plus( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 ));
 		stags[i].SendMessage("set_stag_positon", area);
 		b.stag_move_record(b.to_board_point(area), i);
 	}
