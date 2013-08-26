@@ -45,6 +45,14 @@ function around_check(p : Vector2, houi : int, i : int) : int
 	return b.area_check(p + hougaku_plus(point));	
 }
 
+//方向転換関数
+function change_of_direction(r : int, d : int, l : int, i : int)
+{
+	if(r == 0 ){ }
+	if(d == 0){ }
+	if(l == 0){ }
+}
+
 function thinking(p : Vector2, i : int) : int
 {
 	//前を探索
@@ -59,16 +67,15 @@ function thinking(p : Vector2, i : int) : int
 		var down = around_check(p, 2, i);
 		var left = around_check(p, 3, i);
 		
-		if(front == 1 && right != 2 && down != 2 && left != 2) { return 0;}
-		else
+		if(front == 1)
 		{
-			return 2;
+			if(right != 2 && down != 2 && left != 2) { return 0; }
+			else{ change_of_direction(right, down, left, i); }
 		}
+		else{ change_of_direction(right, down, left, i); }
 	}
 	
-	
-	
-	return 0;
+	return -1;
 }
 
 function stag_act(i : int)
@@ -90,11 +97,6 @@ function stag_act(i : int)
 		stags[i].SendMessage("set_stag_positon", area);
 		b.stag_move_record(b.to_board_point(area), i);
 	}
-	else if(answer == 2)
-	{
-		Debug.Log("houkou tenkan");
-	}
-	
 	
 	if(b.is_in_wall_area(b.to_board_point(area)))
 	{
