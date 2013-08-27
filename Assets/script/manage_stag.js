@@ -97,8 +97,8 @@ function stag_act(i : int)
 	if(answer == 0)
 	{
 		//攻撃する
-		var atk_area = area + b.to_world_point( hougaku_plus( stag_hougaku(i) ));
-		b.atk_point(b.to_board_point(atk_area));
+		var atk_area = b.to_board_point( area + hougaku_plus(stag_hougaku(i)) );
+		b.atk_point(atk_area);
 	}
 	else if(answer == 1)
 	{

@@ -165,6 +165,11 @@ function atk_point(p : Vector2) : boolean
 	
 	if(content ==  1)
 	{
+		Debug.Log("gagaga");
+		Debug.Log(p.y);
+		Debug.Log(p.x);
+		Debug.Log((p.y * 7) + p.x);
+		
 		if(blocks[(p.y * 7) + p.x].gameObject != null)
 		{
 			blocks[(p.y * 7) + p.x].SendMessage("damege_block");
