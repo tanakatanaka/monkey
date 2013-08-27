@@ -104,6 +104,19 @@ function get_stag_area(num : int) : Vector3
 	return to_world_point(stags_area[num]);
 }
 
+//指定位置のblockの番号を返す
+function serch_brock_num(p : Vector3) : int
+{
+	for(var i = 0; i < blocks.Length; i++)
+	{
+		if( (blocks[i].gameObject != null) && (blocks[i].gameObject.transform.position == p) )
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
 //移動前の配列を0(何もない)にして,現在の位置を配列に記録
 function move_record(last_p : Vector2, presant_p : Vector2, c_val : int)
 {
@@ -165,17 +178,14 @@ function atk_point(p : Vector2) : boolean
 	
 	if(content ==  1)
 	{
-		Debug.Log("gagaga");
-		Debug.Log(p.y);
-		Debug.Log(p.x);
-		Debug.Log((p.y * 7) + p.x);
+		var num = serch_brock_num(to_world_point(p));
 		
-		if(blocks[(p.y * 7) + p.x].gameObject != null)
+		if(blocks[num].gameObject != null)
 		{
-			blocks[(p.y * 7) + p.x].SendMessage("damege_block");
+			blocks[num].SendMessage("damege_block");
 		} 
 		
-		if(blocks[(p.y * 7) + p.x].gameObject == null)
+		if(blocks[num].gameObject == null)
 		{	
 			move_record(p, p, 0);
 		}

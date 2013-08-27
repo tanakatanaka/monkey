@@ -65,9 +65,6 @@ function thinking(p : Vector2, i : int) : int
 	//前を探索
 	var front = around_check(p, 0, i);
 	
-	Debug.Log("front");
-	Debug.Log(front);
-	
 	if(front == 0){ return 1; }
 	else if(front == 2) { return 0; }
 	else
