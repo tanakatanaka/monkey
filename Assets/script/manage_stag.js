@@ -42,11 +42,14 @@ function hougaku_plus(point : int) :Vector2
 //上下左右に何があるかを返す
 function around_check(p : Vector2, houi : int, i : int) : int
 {
-	Debug.Log("nemurenai");
-	Debug.Log( Mathf.Round( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 )  + houi );
-
-	var point : int = ( Mathf.Round( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 )  + houi ) % 4;
+	var point : int = ( stag_hougaku(i)  + houi ) % 4;
 	return b.area_check(p + hougaku_plus(point));	
+}
+
+//stagの角度を0~3にして返す
+function stag_hougaku(i : int) : int  
+{
+	return	Mathf.Round( (stags[i].transform.rotation.eulerAngles.y  + 45) / 90 ); 	
 }
 
 //方向転換関数
@@ -61,6 +64,9 @@ function thinking(p : Vector2, i : int) : int
 {
 	//前を探索
 	var front = around_check(p, 0, i);
+	
+	Debug.Log("front");
+	Debug.Log(front);
 	
 	if(front == 0){ return 1; }
 	else if(front == 2) { return 0; }
@@ -91,13 +97,13 @@ function stag_act(i : int)
 	if(answer == 0)
 	{
 		//攻撃する
-		var atk_area = area + b.to_world_point(hougaku_plus( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 ));
+		var atk_area = area + b.to_world_point( hougaku_plus( stag_hougaku(i) ));
 		b.atk_point(b.to_board_point(atk_area));
 	}
 	else if(answer == 1)
 	{
 		//移動して記録bordに記録する
-		area += b.to_world_point(hougaku_plus( (stags[i].transform.rotation.eulerAngles.y + 45) / 90 ));
+		area += b.to_world_point( hougaku_plus( stag_hougaku(i) ) );
 		stags[i].SendMessage("set_stag_positon", area);
 		b.stag_move_record(b.to_board_point(area), i);
 	}
