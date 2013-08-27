@@ -49,7 +49,7 @@ function around_check(p : Vector2, houi : int, i : int) : int
 //stagの角度を0~3にして返す
 function stag_hougaku(i : int) : int  
 {
-	return	Mathf.Round( (stags[i].transform.rotation.eulerAngles.y  + 45) / 90 ); 	
+	return	Mathf.Round( ( stags[i].transform.rotation.eulerAngles.y ) / 90 ); 	
 }
 
 //方向転換関数
