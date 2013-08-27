@@ -53,11 +53,22 @@ function stag_hougaku(i : int) : int
 }
 
 //方向転換関数
-function change_of_direction(r : int, d : int, l : int, i : int)
+function change_of_direction(r : int, d : int, l : int, stag_num : int)
 {
-	if(r == 0 ){ }
-	if(d == 0){ }
-	if(l == 0){ }
+	var h : int[] = [r, d, l];
+	var kouho = new Array();
+	
+	for (var i = 0; i < 3; i++)
+	{
+  		if (h[i] == 0 || h[i] == 2)
+  		{
+    		kouho.Push(i);
+  		}
+	}
+	
+	var result : int = kouho[Random.Range(0, kouho.length)];
+	
+	stags[stag_num].transform.rotation.eulerAngles.y = (result + 1)  * 90;
 }
 
 function thinking(p : Vector2, i : int) : int

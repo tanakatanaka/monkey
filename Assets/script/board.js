@@ -190,6 +190,10 @@ function atk_point(p : Vector2) : boolean
 			move_record(p, p, 0);
 		}
 	}
+	else if(content == 2)
+	{
+		Debug.Log("Game over");
+	}
 	else if(content ==  3)
 	{
 		for(var i = 0; i < stags_area.Length; i++)
