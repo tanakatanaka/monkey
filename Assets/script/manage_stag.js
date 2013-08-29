@@ -67,8 +67,8 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
 	}
 	
 	var result : int = kouho[Random.Range(0, kouho.length)];
-	
-	stags[stag_num].transform.rotation.eulerAngles.y = (result + 1)  * 90;
+	var hougaku_result : int = ( (result + 1) + stag_hougaku(stag_num) ) % 4;
+	stags[stag_num].transform.rotation.eulerAngles.y = hougaku_result * 90;
 }
 
 function thinking(p : Vector2, i : int) : int
