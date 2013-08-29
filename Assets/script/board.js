@@ -117,6 +117,20 @@ function serch_brock_num(p : Vector3) : int
 	return -1;
 }
 
+//指定の配列位置のstagの番号を返す
+function serch_stag_num_2d(p : Vector2) : int
+{
+	for(var i = 0; i < stags_area.Length; i++)
+	{
+		if( (stags_area[i] != null) && (stags_area[i] == p ) )
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+
 //移動前の配列を0(何もない)にして,現在の位置を配列に記録
 function move_record(last_p : Vector2, presant_p : Vector2, c_val : int)
 {
@@ -175,10 +189,13 @@ function to_board_point(position : Vector3) : Vector2
 function atk_point(p : Vector2) : boolean
 {
 	var content = area_check(p);
+	var num;
+	
+	Debug.Log(p);
 	
 	if(content ==  1)
 	{
-		var num = serch_brock_num(to_world_point(p));
+		num = serch_brock_num(to_world_point(p));
 		
 		if(blocks[num].gameObject != null)
 		{
@@ -196,19 +213,15 @@ function atk_point(p : Vector2) : boolean
 	}
 	else if(content ==  3)
 	{
-		for(var i = 0; i < stags_area.Length; i++)
-		{
-			if(p == stags_area[i])
-			{
-				GameObject.FindWithTag("manage_stag").SendMessage("stag_dead", i);
-				move_record(p, p, 4);
-				Instantiate(dead_stag,to_world_point(p),out_cube.transform.rotation);
-				break;
-			}
-		}
+		num = serch_stag_num_2d(p);
+		
+		GameObject.FindWithTag("manage_stag").SendMessage("stag_dead", num);
+		move_record(p, p, 4);
+		Instantiate(dead_stag,to_world_point(p),out_cube.transform.rotation);
 	}
 }
 
 function Update () 
 {
+	//check_stag_are();
 }

@@ -28,6 +28,8 @@ function make_stag(p : Vector3)
 
 function stag_dead(i : int)
 {
+	Debug.Log("dead_area");
+	Debug.Log(b.to_board_point(stags[i].gameObject.transform.position));
 	stags[i].SendMessage("set_dead");
 }
 
@@ -105,7 +107,10 @@ function stag_act(i : int)
 	if(answer == 0)
 	{
 		//攻撃する
-		var atk_area = b.to_board_point( area + hougaku_plus(stag_hougaku(i)) );
+		Debug.Log("atk stags");
+		var atk_area = b.to_board_point( area )+ hougaku_plus(stag_hougaku(i));
+		Debug.Log(area);
+		Debug.Log(hougaku_plus(stag_hougaku(i)));
 		b.atk_point(atk_area);
 	}
 	else if(answer == 1)
