@@ -32,13 +32,21 @@ function Update ()
 {
 	if(g.Get_turn() % 2 == 1)
 	{
-		GameObject.FindWithTag("color").SendMessage("set_area", this.transform.position);
-		GameObject.FindWithTag("color").SendMessage("set_color", 1);
+	
+		for(var i = 0; i < colors.length; i++)
+		{
+			colors[i].SendMessage("set_area", this.transform.position);
+			colors[i].SendMessage("set_color", 1);
+		}
+		
 		if (Input.GetButtonDown("Fire1")) 
 		{
 			// クリックしたら移動
 			click_area();
-			GameObject.FindWithTag("color").SendMessage("set_color", 0);
+			for(i = 0; i < colors.length; i++)
+			{
+				colors[i].SendMessage("set_color", 0);
+			}
 		}
 	}
 }

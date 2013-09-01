@@ -1,11 +1,10 @@
 #pragma strict
 
-private var color : int;
+var color : int = 0;
 var origin_p : Vector3;
 
 function Start () 
 {
-	color = 0;
 	this.transform.position.y = 0.1;
 	origin_p = this.transform.position;
 }
@@ -26,7 +25,7 @@ function Update ()
 { 
 	if(color != 0)
 	{
-		this.renderer.material.color.a = (Mathf.Sin( Time.frameCount / 20 ) + 1) / 2 + 0.2;
+		this.renderer.material.color.a = (Mathf.Sin( Time.frameCount / 20 ) + 1) / 2 - 0.3;
 	}
 	else if(color == 0)
 	{
