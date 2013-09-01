@@ -1,6 +1,6 @@
 #pragma strict
 
-var life : int = 3;
+var life : int = 5;
 
 function Start () 
 {
