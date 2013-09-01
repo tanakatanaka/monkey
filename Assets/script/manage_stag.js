@@ -22,7 +22,7 @@ function make_stag(p : Vector3)
 {
 	//位置情報をももらい配列に固体をいれ作成
 	stags[count] = Instantiate(stag,p,stag.transform.rotation);
-	stags[count].transform.rotation.eulerAngles.y = 90;
+	stags[count].transform.rotation.eulerAngles.y = 90 * Random.Range(0, 4);
 	count++;
 }
 
