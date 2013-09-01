@@ -6,21 +6,39 @@ var turn : GameObject;
 private var g : game;
 private var b : board;
 
+var color : GameObject;
+private var colors : GameObject[];
+
+
+function create_colors()
+{
+	colors[0] = Instantiate(color,b.to_world_point(Vector2(0,-1)),color.transform.rotation);
+	colors[1] = Instantiate(color,b.to_world_point(Vector2(1,0)),color.transform.rotation);
+	colors[2] = Instantiate(color,b.to_world_point(Vector2(0,1)),color.transform.rotation);
+	colors[3] = Instantiate(color,b.to_world_point(Vector2(-1,0)),color.transform.rotation);
+	colors[4] = Instantiate(color,b.to_world_point(Vector2(0,0)),color.transform.rotation);
+}
+
 function Start () 
 {
 	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
 	transform.position = b.get_player_area();
+	colors = new GameObject[5];
+	create_colors();
 }
 
 function Update () 
 {
 	if(g.Get_turn() % 2 == 1)
 	{
+		GameObject.FindWithTag("color").SendMessage("set_area", this.transform.position);
+		GameObject.FindWithTag("color").SendMessage("set_color", 1);
 		if (Input.GetButtonDown("Fire1")) 
 		{
 			// クリックしたら移動
 			click_area();
+			GameObject.FindWithTag("color").SendMessage("set_color", 0);
 		}
 	}
 }
