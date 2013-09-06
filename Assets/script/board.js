@@ -209,6 +209,7 @@ function atk_point(p : Vector2) : boolean
 	}
 	else if(content == 2)
 	{
+		GameObject.FindWithTag("game").SendMessage("game_end", false);
 		Debug.Log("Game over");
 	}
 	else if(content ==  3)

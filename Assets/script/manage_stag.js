@@ -123,6 +123,7 @@ function stag_act(i : int)
 	
 	if(b.is_in_wall_area(b.to_board_point(area)))
 	{
+		GameObject.FindWithTag("game").SendMessage("game_end", false);
 		Debug.Log("game over");
 	}
 	
@@ -131,16 +132,20 @@ function stag_act(i : int)
 
 function Update () 
 {
+	var now_stag : int = 0;
 	if(g.Get_turn() % 2 == 0)
 	{
 		for(var i = 0; i  < this.count; i++)
 		{
-			if(stags[i] != null)
-			{
-				stag_act(i);
-			}
+			if(stags[i] != null){ stag_act(i); }
+			else{ now_stag++; }
+			
 		}
 		
+		if(now_stag == this.count)
+		{
+			GameObject.FindWithTag("game").SendMessage("game_end", true);
+		}
 		g.turn_up();
 	}
 	
