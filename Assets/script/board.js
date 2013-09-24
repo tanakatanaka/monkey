@@ -13,7 +13,6 @@ var board =
 
 var out_cube : GameObject;
 var line : GameObject;
-var dead_stag : GameObject;
 private var blocks : GameObject[];
 private var player_area : Vector2;
 private var stags_area : Vector2[];
@@ -192,7 +191,7 @@ function atk_point(p : Vector2) : boolean
 	var num;
 	
 	Debug.Log(p);
-	
+
 	if(content ==  1)
 	{
 		num = serch_brock_num(to_world_point(p));
@@ -218,7 +217,6 @@ function atk_point(p : Vector2) : boolean
 		
 		GameObject.FindWithTag("manage_stag").SendMessage("stag_dead", num);
 		move_record(p, p, 4);
-		Instantiate(dead_stag,to_world_point(p),out_cube.transform.rotation);
 	}
 }
 

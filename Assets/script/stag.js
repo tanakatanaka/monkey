@@ -2,8 +2,8 @@
 
 function set_dead()
 {
-	Destroy(this.gameObject);
 	Debug.Log("im dead");
+	this.transform.renderer.material.color = Vector4(0,0,1,1);
 }
 
 function set_stag_positon(p : Vector3)

@@ -31,6 +31,7 @@ function stag_dead(i : int)
 	Debug.Log("dead_area");
 	Debug.Log(b.to_board_point(stags[i].gameObject.transform.position));
 	stags[i].SendMessage("set_dead");
+	stags[i] = null;
 }
 
 function hougaku_plus(point : int) :Vector2 
