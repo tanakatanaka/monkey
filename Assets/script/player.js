@@ -51,12 +51,28 @@ function Update ()
 	}
 }
 
+//playerの方向をクリック方向にする
+function turn_player(diff : Vector2)
+{
+	var hougaku : int = 0;
+			
+	if(diff == Vector2(0, -1)) { hougaku = 0;}
+	else if(diff == Vector2(1, 0)) { hougaku = 1; }
+	else if(diff == Vector2(0, 1)) { hougaku = 2; }
+	else if(diff == Vector2(-1, 0)) { hougaku = 3; }
+
+	this.transform.rotation.eulerAngles.y = hougaku * 90;
+}
+
 //斜めを除く1マス以内かどうか判定
 function one_square(cp : Vector2) : boolean
 {
 	var pp = b.to_board_point(transform.position);
-	if(Mathf.Abs(cp.x - pp.x)  + Mathf.Abs(cp.y - pp.y) < 2)
+	var diff = Vector2(cp.x - pp.x, cp.y - pp.y);
+	
+	if(Mathf.Abs(diff.x) + Mathf.Abs(diff.y) < 2)
 	{
+		if(diff != Vector2(0,0)) { turn_player(diff); }
 		return true;
 	}
 	return false;
