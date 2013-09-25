@@ -36,16 +36,16 @@ function Update ()
 		for(var i = 0; i < colors.length; i++)
 		{
 			colors[i].SendMessage("set_area", this.transform.position);
-			colors[i].SendMessage("set_color", 1);
+			colors[i].SendMessage("set_color", b.area_check(b.to_board_point(colors[i].transform.position)));
 		}
-		
+	
 		if (Input.GetButtonDown("Fire1")) 
 		{
 			// クリックしたら移動
 			click_area();
 			for(i = 0; i < colors.length; i++)
 			{
-				colors[i].SendMessage("set_color", 0);
+				colors[i].SendMessage("set_color", -1);
 			}
 		}
 	}

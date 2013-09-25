@@ -23,12 +23,12 @@ function set_area(p : Vector3)
 
 function Update ()
 { 
-	if(color != 0)
-	{
-		this.renderer.material.color.a = (Mathf.Sin( Time.frameCount / 20 ) + 1) / 2 - 0.3;
-	}
-	else if(color == 0)
+	if(this.color == 1 || this.color == 4 || this.color == -1)
 	{
 		this.renderer.material.color.a = 0;
+	}
+	else
+	{
+		this.renderer.material.color.a = (Mathf.Sin( Time.frameCount / 20 ) + 1) / 2 - 0.3;
 	}
 }
