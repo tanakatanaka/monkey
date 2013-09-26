@@ -64,7 +64,7 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
 {
 	var h : int[] = [r, d, l];
 	var kouho = new Array();
-	var combo_turn = -1;
+	var result : int;
 	
 	for (var i = 0; i < 3; i++)
 	{
@@ -72,16 +72,18 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
   		{
   			if(combo[stag_num] == true && h[i] == 2)
   			{
-  				combo_turn = i;
+  				result = i;
   				break;
   			}
     		kouho.Push(i);
   		}
 	}
 	
-	var result : int;
-	if(combo_turn == -1){ result = kouho[Random.Range(0, kouho.length)]; }
-	else{ result = h[i]; } 
+	if(combo[stag_num] == false)
+	{
+		Debug.Log("ただの方向転換");
+		result = kouho[Random.Range(0, kouho.length)]; 
+	}
 	var hougaku_result : int = ( (result + 1) + stag_hougaku(stag_num) ) % 4;
 	stags[stag_num].transform.rotation.eulerAngles.y = hougaku_result * 90;
 }
@@ -137,7 +139,7 @@ function thinking(p : Vector2, i : int) : int
 		else{ combo[i] = false; }
 	}
 	//コンボがなくて前方が空白マスなら前進
-	if(combo[i] != false && front == 0){ return 1; }
+	if(combo[i] == false && front == 0){ return 1; }
 	else{ change_of_direction(right, down, left, i); }
 		
 	return -1;
