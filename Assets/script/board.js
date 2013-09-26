@@ -203,7 +203,7 @@ function atk_point(p : Vector2) : boolean
 		
 		if(blocks[num].gameObject == null)
 		{	
-			move_record(p, p, 0);
+			move_record(p, p, -1);
 		}
 	}
 	else if(content == 2)

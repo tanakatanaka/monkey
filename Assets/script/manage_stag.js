@@ -8,6 +8,7 @@ private var g : game;
 //stagのobject・配列
 var stag : GameObject;
 private var stags : GameObject[];
+private var combo : boolean[];
 var	count : int = 0;
 
 
@@ -15,7 +16,10 @@ function Start ()
 {
 	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
-	stags = new GameObject[4];
+	
+	var num = 4;
+	stags = new GameObject[num];
+	combo = new boolean[num];
 }
 
 function make_stag(p : Vector3)
@@ -60,18 +64,46 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
 {
 	var h : int[] = [r, d, l];
 	var kouho = new Array();
+	var combo_turn = -1;
 	
 	for (var i = 0; i < 3; i++)
 	{
   		if (h[i] == 0 || h[i] == 2)
   		{
+  			if(combo[stag_num] == true && h[i] == 2)
+  			{
+  				combo_turn = i;
+  				break;
+  			}
     		kouho.Push(i);
   		}
 	}
 	
-	var result : int = kouho[Random.Range(0, kouho.length)];
+	var result : int;
+	if(combo_turn == -1){ result = kouho[Random.Range(0, kouho.length)]; }
+	else{ result = h[i]; } 
 	var hougaku_result : int = ( (result + 1) + stag_hougaku(stag_num) ) % 4;
 	stags[stag_num].transform.rotation.eulerAngles.y = hougaku_result * 90;
+}
+
+function combo_check() : boolean
+{
+	var combo_count = 0;
+	var p_area_2d = b.to_board_point( b.get_player_area() );
+	
+	for(var i = 0; i < this.count; i++)
+	{
+		var stag_num = b.serch_stag_num_2d( p_area_2d + hougaku_plus(i) );
+		
+		if(stag_num != -1 && combo[stag_num] == true)
+		{
+			combo_count++;
+		}
+		
+		if(combo_count >= 2){ return true; }
+	}
+	
+	return false;
 }
 
 function thinking(p : Vector2, i : int) : int
@@ -79,23 +111,35 @@ function thinking(p : Vector2, i : int) : int
 	//前を探索
 	var front = around_check(p, 0, i);
 	
-	if(front == 0){ return 1; }
+	//最優先:目の前がゴールかplayerだったら前進か攻撃
+	if(front == -1) { return 1; }
 	else if(front == 2) { return 0; }
+	
+	//前にplayerがいない時,左右下に何があるか確認
+	var right = around_check(p, 1, i);
+	var down = around_check(p, 2, i);
+	var left = around_check(p, 3, i);
+	
+	//四方にplayerがいないとき
+	if(right != 2 && down != 2 && left != 2) 
+	{ 
+		if(front == 0){ return 1; }
+		else if(front == 1){ return 0; }
+	}
 	else
 	{
-		//前がだめなとき左右下に何があるか確認
-		var right = around_check(p, 1, i);
-		var down = around_check(p, 2, i);
-		var left = around_check(p, 3, i);
-		
-		if(front == 1)
+		//四方にplayerがいてコンボをチェック
+		if(combo_check() == true)
 		{
-			if(right != 2 && down != 2 && left != 2) { return 0; }
-			else{ change_of_direction(right, down, left, i); }
+			Debug.Log("combo");
+			combo[i] = true;
 		}
-		else{ change_of_direction(right, down, left, i); }
+		else{ combo[i] = false; }
 	}
-	
+	//コンボがなくて前方が空白マスなら前進
+	if(combo[i] != false && front == 0){ return 1; }
+	else{ change_of_direction(right, down, left, i); }
+		
 	return -1;
 }
 
@@ -130,17 +174,25 @@ function stag_act(i : int)
 	
 }
 
+function reset_combo()
+{
+	for(var i = 0; i  < this.count; i++)
+	{
+		if(stags[i] != null) { combo[i] = true; }
+		else { combo[i] = false; }
+	}
+}
 
 function Update () 
 {
 	var now_stag : int = 0;
 	if(g.Get_turn() % 2 == 0)
 	{
+		reset_combo();
 		for(var i = 0; i  < this.count; i++)
 		{
 			if(stags[i] != null){ stag_act(i); }
 			else{ now_stag++; }
-			
 		}
 		
 		if(now_stag == this.count)
