@@ -9,6 +9,10 @@ private var b : board;
 var color : GameObject;
 private var colors : GameObject[];
 
+//animation関連の関数
+var distance : Vector3 = Vector3(0,0,0);
+var arrive_count : int  = 0;
+var arrive_point : Vector3;
 
 function create_colors()
 {
@@ -49,6 +53,8 @@ function Update ()
 			}
 		}
 	}
+	
+	move_animation();
 }
 
 //playerの方向をクリック方向にする
@@ -78,6 +84,26 @@ function one_square(cp : Vector2) : boolean
 	return false;
 }
 
+function move_animation()
+{
+	var cut = 20;
+
+	if(distance != Vector3(0,0,0))
+	{
+		if(arrive_count != cut)
+		{
+			this.transform.position += distance / cut;
+			arrive_count++;
+		}
+		else
+		{
+			this.transform.position = arrive_point;
+			distance = Vector3(0,0,0);
+			arrive_count = 0;
+		}
+	}	
+}
+
 //指定マスの内容・座標により行動
 function chara_act(act : int, bp : Vector2)
 {
@@ -86,7 +112,10 @@ function chara_act(act : int, bp : Vector2)
 	{	
 		// きりのいい座標にするため、盤面座標から空間座標に変換し直す
 		b.move_record(b.to_board_point(transform.position), bp, 2);
-		transform.position = b.to_world_point(bp);
+		var p = b.to_world_point(bp);
+		distance = p - this.transform.position;
+		arrive_point = p;  
+		
 	}
 	else if(act == 3)
 	{
@@ -113,5 +142,4 @@ function click_area()
 	{
 		chara_act(b.area_check(boardPoint), boardPoint);
 	}
-	
 }

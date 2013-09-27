@@ -17,12 +17,7 @@ function set_stag_positon(p : Vector3)
 	//this.transform.position = p;
 }
 
-function set_stag_rotation(r : float)
-{
-	this.transform.rotation.y = r;
-}
-
-function Update () 
+function move_animation()
 {
 	var cut = 30;
 
@@ -40,4 +35,15 @@ function Update ()
 			arrive_count = 0;
 		}
 	}
+}
+
+function attack_animation()
+{
+	
+}
+
+function Update () 
+{
+	move_animation();
+	attack_animation();
 }
