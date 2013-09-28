@@ -1,6 +1,5 @@
 #pragma strict
 var turn_count : int = 1;
-private var up_timer : int = -5;
 var labelStyleGameEnd : GUIStyle;
 //ゲーム進行関係
 private var state : String = "game play";
@@ -12,25 +11,8 @@ function Get_turn()
 
 function turn_up()
 {
-	this.up_timer = 20;
+	this.turn_count++;
 }
-
-function turn_up_gimmick()
-{
-	if(this.up_timer > 0) { this.up_timer--; }
-	else if(this.up_timer == 0)
-	{ 
-		this.up_timer = -5;
-		this.turn_count++;
-		Debug.Log("up up");
-		Debug.Log(this.turn_count);
-	}
-}
-
-function Update () 
-{
-	turn_up_gimmick();
-}	
 
 function game_end(clear : boolean)
 {

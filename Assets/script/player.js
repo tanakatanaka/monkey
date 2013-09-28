@@ -13,6 +13,7 @@ private var colors : GameObject[];
 var distance : Vector3 = Vector3(0,0,0);
 var arrive_count : int  = 0;
 var arrive_point : Vector3;
+var interval : int = 30;
 
 function create_colors()
 {
@@ -34,9 +35,10 @@ function Start ()
 
 function Update () 
 {
-	if(g.Get_turn() % 2 == 1)
-	{
+	if(g.Get_turn() % 2 == 1){ this.interval++; }
 	
+	if(g.Get_turn() % 2 == 1 && this.interval > 30)
+	{
 		for(var i = 0; i < colors.length; i++)
 		{
 			colors[i].SendMessage("set_area", this.transform.position);
@@ -50,6 +52,7 @@ function Update ()
 			for(i = 0; i < colors.length; i++)
 			{
 				colors[i].SendMessage("set_color", -1);
+				colors[i].SendMessage("reset_time");
 			}
 		}
 	}
@@ -123,7 +126,7 @@ function chara_act(act : int, bp : Vector2)
 		Debug.Log("atk players");
 		b.atk_point(bp);
 	}
-	
+	this.interval = 0; 
 	g.turn_up();
 }
 
