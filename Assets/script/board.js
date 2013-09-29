@@ -14,6 +14,7 @@ var board =
 var out_cube : GameObject;
 var line : GameObject;
 var turn : GameObject;
+private var start_game : boolean = false; 
 private var g : game;
 private var blocks : GameObject[];
 private var player_area : Vector2;
@@ -30,7 +31,7 @@ function create_piece()
 {
  	var pos:Vector3 = Vector3(0, 0.5, 0);
  	blocks = new GameObject[24];
- 	stags_area = new Vector2[4];
+ 	stags_area = new Vector2[5];
  	var block_count = 0;
  	var stag_count = 0;
   	
@@ -91,18 +92,15 @@ function level_set()
 	{
 		board[2][4] = 0;
 	}
-	else if(level == 2)
+	else if(level == 5)
 	{
-				
+		board[2][3] = 3;		
 	}
 }
 
 function Start () 
 {
 	g = turn.GetComponent(game);
-	level_set();
-	create_piece();
-	create_line();
 }
 
 /*
@@ -240,5 +238,11 @@ function atk_point(p : Vector2) : boolean
 
 function Update () 
 {
-	//check_stag_are();
+	if(this.start_game == false && g.Get_level() != 0)
+	{
+		level_set();
+		create_piece();
+		create_line();
+		this.start_game = true;
+	}
 }

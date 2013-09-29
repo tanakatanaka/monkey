@@ -3,6 +3,7 @@
 var floor : GameObject;
 var main_camera : Camera;
 var turn : GameObject;
+private var start_game : boolean = false; 
 private var g : game;
 private var b : board;
 
@@ -28,13 +29,18 @@ function Start ()
 {
 	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
-	transform.position = b.get_player_area();
 	colors = new GameObject[5];
 	create_colors();
 }
 
 function Update () 
 {
+	if(this.start_game == false && g.Get_level() != 0)
+	{
+		transform.position = b.get_player_area();
+		this.start_game = true;
+	} 
+
 	if(g.Get_turn() % 2 == 1){ this.interval++; }
 	
 	if(g.Get_turn() % 2 == 1 && this.interval > 30)

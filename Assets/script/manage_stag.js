@@ -17,7 +17,7 @@ function Start ()
 	g = turn.GetComponent(game);
 	b = floor.GetComponent(board);
 	
-	var num = 4;
+	var num = 10;
 	stags = new GameObject[num];
 	combo = new boolean[num];
 }
