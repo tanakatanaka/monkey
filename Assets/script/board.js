@@ -13,6 +13,8 @@ var board =
 
 var out_cube : GameObject;
 var line : GameObject;
+var turn : GameObject;
+private var g : game;
 private var blocks : GameObject[];
 private var player_area : Vector2;
 private var stags_area : Vector2[];
@@ -81,8 +83,24 @@ function create_line()
 	}	
 }
 
+function level_set()
+{
+	var level = g.Get_level();
+	
+	if(level == 1)
+	{
+		board[2][4] = 0;
+	}
+	else if(level == 2)
+	{
+				
+	}
+}
+
 function Start () 
 {
+	g = turn.GetComponent(game);
+	level_set();
 	create_piece();
 	create_line();
 }
