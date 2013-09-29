@@ -59,6 +59,20 @@ function stag_hougaku(i : int) : int
 	return	Mathf.Round( ( stags[i].transform.rotation.eulerAngles.y ) / 90 ); 	
 }
 
+//levelに応じて確率を計算し,真偽を返す
+function level_pro() : boolean
+{
+	var level = g.Get_level();
+	var probability = 0;
+	
+	if(level == 1 || level == 4) { return true; }
+	else if(level == 2 || level == 5) { probability = 30; }
+	else if(level == 3) { probability = 50; }
+	
+	if(probability >= Random.Range(0, 100)) { return true;}
+	else { return false; }
+}
+
 //方向転換関数
 function change_of_direction(r : int, d : int, l : int, stag_num : int)
 {
@@ -139,7 +153,7 @@ function thinking(p : Vector2, i : int) : int
 		else{ combo[i] = false; }
 	}
 	//コンボがなくて前方が空白マスなら前進
-	if(combo[i] == false && front == 0){ return 1; }
+	if(front == 0 && (level_pro() == true || combo[i] == false)){ return 1; }
 	else{ change_of_direction(right, down, left, i); }
 		
 	return -1;

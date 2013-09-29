@@ -43,7 +43,8 @@ function create_piece()
 		{ 
 			if(board[z][x] == 1)
 			{
-				blocks[block_count] = Instantiate(out_cube,pos,out_cube.transform.rotation); 
+				blocks[block_count] = Instantiate(out_cube,pos,out_cube.transform.rotation);
+				blocks[block_count].SendMessage("set_max", g.Get_level()); 
 				block_count++;
 			}
 			else if(board[z][x] == 2)
@@ -88,14 +89,8 @@ function level_set()
 {
 	var level = g.Get_level();
 	
-	if(level == 1)
-	{
-		board[2][4] = 0;
-	}
-	else if(level == 5)
-	{
-		board[2][3] = 3;		
-	}
+	if(level == 1) { board[2][4] = 0; }
+	else if(level >= 4) { board[2][3] = 3; }
 }
 
 function Start () 
