@@ -128,7 +128,7 @@ function thinking(p : Vector2, i : int) : int
 	var front = around_check(p, 0, i);
 	
 	//最優先:目の前がゴールかplayerだったら前進か攻撃
-	if(front == -1) { return 1; }
+	if(front == -5) { return 1; }
 	else if(front == 2) { return 0; }
 	
 	//前にplayerがいない時,左右下に何があるか確認

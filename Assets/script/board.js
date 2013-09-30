@@ -11,6 +11,17 @@ var board =
 	[1,1,1,1,1,1,1]
 ];
 
+var record_board = 
+[
+	[1,1,1,1,1,1,1],
+	[1,0,0,0,0,0,1],
+	[1,0,3,0,3,0,1],
+	[1,0,0,2,0,0,1],
+	[1,0,3,0,3,0,1],
+	[1,0,0,0,0,0,1],
+	[1,1,1,1,1,1,1]
+];
+
 var out_cube : GameObject;
 var line : GameObject;
 var turn : GameObject;
@@ -214,7 +225,7 @@ function atk_point(p : Vector2) : boolean
 		
 		if(blocks[num].gameObject == null)
 		{	
-			move_record(p, p, -1);
+			move_record(p, p, -5);
 		}
 	}
 	else if(content == 2)
