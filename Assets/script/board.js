@@ -231,6 +231,7 @@ function atk_point(p : Vector2) : boolean
 	else if(content == 2)
 	{
 		GameObject.FindWithTag("game").SendMessage("game_end", false);
+		GameObject.FindWithTag("Player").SendMessage("set_dead");
 		Debug.Log("Game over");
 	}
 	else if(content ==  3)

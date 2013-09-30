@@ -3,7 +3,7 @@
 var floor : GameObject;
 var main_camera : Camera;
 var turn : GameObject;
-private var start_game : boolean = false; 
+private var state : String = "NOT";
 private var g : game;
 private var b : board;
 
@@ -33,17 +33,22 @@ function Start ()
 	create_colors();
 }
 
+function set_dead()
+{
+	this.state = "DEAD";
+}
+
 function Update () 
 {
-	if(this.start_game == false && g.Get_level() != 0)
+	if(this.state == "NOT" && g.Get_level() != 0)
 	{
 		transform.position = b.get_player_area();
-		this.start_game = true;
+		this.state = "PLAY";
 	} 
 
 	if(g.Get_turn() % 2 == 1){ this.interval++; }
 	
-	if(g.Get_turn() % 2 == 1 && this.interval > 30)
+	if(this.state == "PLAY" && g.Get_turn() % 2 == 1 && this.interval > 30)
 	{
 		for(var i = 0; i < colors.length; i++)
 		{
@@ -62,6 +67,13 @@ function Update ()
 			}
 		}
 	}
+	else if(this.state == "DEAD")
+	{
+		for(i = 0; i < colors.length; i++)
+		{
+			colors[i].SendMessage("set_color", -1);
+		}
+	}	
 	
 	move_animation();
 }

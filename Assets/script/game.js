@@ -16,6 +16,11 @@ function turn_up()
 	this.turn_count++;
 }
 
+function Get_state()
+{
+	return this.state;
+}
+
 function Get_level()
 {
 	return this.game_level;
@@ -67,8 +72,11 @@ function OnGUI()
 			this.game_level = 5;
 		}
 		
+		if(this.game_level > 0) { state = "GAME_PLAY"; }
+		
 	}
-	else if(state != "GAME_PLAY" && state != "GAME_SELECT")
+	
+	if(state == "GAME_CLEAR" && state == "GAME_OVER")
 	{
 		var rect_gameover : Rect = Rect(0, 0, Screen.width, Screen.height);
 		var rect_info : Rect = Rect(730, 0, Screen.width, Screen.height);
@@ -77,7 +85,6 @@ function OnGUI()
 		GUI.Label(rect_gameover, state, labelStyleGameEnd); 
 		GUI.Label(rect_info, "click to retry", labelStyleGameEnd);
 	}
-		
 }
 
 function Update () 
