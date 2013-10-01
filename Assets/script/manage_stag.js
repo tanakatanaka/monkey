@@ -185,6 +185,7 @@ function stag_act(i : int)
 	if(b.is_in_wall_area(b.to_board_point(area)))
 	{
 		GameObject.FindWithTag("game").SendMessage("game_end", false);
+		GameObject.FindWithTag("Player").SendMessage("set_end", false);
 		Debug.Log("game over");
 	}
 	

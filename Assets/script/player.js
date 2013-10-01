@@ -33,9 +33,10 @@ function Start ()
 	create_colors();
 }
 
-function set_dead()
+function set_end(end : boolean)
 {
-	this.state = "DEAD";
+	if(end == true) { this.state = "CLEAR"; }
+	else { this.state = "DEAD"; } 
 }
 
 function Update () 
