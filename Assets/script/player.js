@@ -68,7 +68,7 @@ function Update ()
 			}
 		}
 	}
-	else if(this.state == "DEAD")
+	else if(this.state == "DEAD" || this.state == "CLEAR")
 	{
 		for(i = 0; i < colors.length; i++)
 		{

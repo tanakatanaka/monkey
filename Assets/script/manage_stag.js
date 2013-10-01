@@ -215,6 +215,7 @@ function Update ()
 		if(now_stag == this.count)
 		{
 			GameObject.FindWithTag("game").SendMessage("game_end", true);
+			GameObject.FindWithTag("Player").SendMessage("set_end", true);
 		}
 		g.turn_up();
 	}
