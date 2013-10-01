@@ -37,8 +37,3 @@ function OnGUI()
 		if(GUI.Button(new Rect(x + place * 3, y, size, size), "やめる")) {  }
 	}
 }
-
-function Update () 
-{
-	OnGUI();
-}
