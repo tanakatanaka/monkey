@@ -51,9 +51,7 @@ function OnGUI()
 		var size : float = sw / 10;
 		// ボタン間の間隔
 		var margin : float = size / 3;
-
 		var label_height : float = size / 4;
-
 		var total_ui_width : float = size * 5 + margin * 4;
 		var total_ui_height : float = label_height + margin + size;
 
