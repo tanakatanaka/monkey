@@ -64,6 +64,8 @@ function OnGUI()
 
 		y += label_height + margin;
 		
+		var place : float = size + margin;
+		
 		if(GUI.Button(new Rect(x , y, size, size), "Level 1")) { this.game_level = 1; }
 		if(GUI.Button(new Rect(x + place, y, size, size), "Level 2")) { this.game_level = 2; }
 		if(GUI.Button(new Rect(x + place * 2, y, size, size), "Level 3")) { this.game_level = 3; }
