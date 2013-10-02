@@ -27,13 +27,16 @@ function OnGUI()
 		var x : float = (sw - total_ui_width) / 2;
 		var y : float = (sh - total_ui_height) / 2;
 		
+		if(state == "GAME_CLEAR"){state = "GAME CLEAR!";}
+		else if(state == "GAME_OVER"){state = "GAME OVER";}
+		
 		GUI.Box(new Rect(x, y, total_ui_width, label_height), state);
 
 		y += label_height + margin;
 		
 		var place : float = size + margin;
 		
-		if(GUI.Button(new Rect(x + place, y, size, size), "つづける")) {  }
-		if(GUI.Button(new Rect(x + place * 3, y, size, size), "やめる")) {  }
+		if(GUI.Button(new Rect(x + place, y, size, size), "つづける")) { Application.LoadLevel("test"); }
+		if(GUI.Button(new Rect(x + place * 3, y, size, size), "やめる")) { Application.LoadLevel("op"); }
 	}
 }

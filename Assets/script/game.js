@@ -31,13 +31,11 @@ function game_end(clear : boolean)
 	if(clear == true){ state = "GAME_CLEAR"; }
 	else{ state = "GAME_OVER"; }
 	
-	// 連打しすぎてスコア表示画面が飛ばされるのを防ぐ
 	yield WaitForSeconds(1.0);
 	while (!Input.GetButtonDown("Fire1")) 
 	{
 		yield;
 	}
-	Application.LoadLevel("op");
 }
 
 function OnGUI()
