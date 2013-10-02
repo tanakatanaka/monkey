@@ -11,13 +11,15 @@ function Start ()
 function OnGUI()
 {
 	var state = g.Get_state();
+	
 	if( state == "GAME_CLEAR" || state == "GAME_OVER")
 	{
 		var sw : float = Screen.width;
 		var sh : float = Screen.height;
-
+	
 		// ボタンのサイズ
 		var size : float = sw / 10;
+				
 		// ボタン間の間隔
 		var margin : float = size / 3;
 		var label_height : float = size / 4;
@@ -38,5 +40,10 @@ function OnGUI()
 		
 		if(GUI.Button(new Rect(x + place, y, size, size), "つづける")) { Application.LoadLevel("test"); }
 		if(GUI.Button(new Rect(x + place * 3, y, size, size), "やめる")) { Application.LoadLevel("op"); }
+	}
+	
+	else if(state == "GAME_PLAY")
+	{
+		if(GUI.Button(new Rect(sw - size * 2, y - size * 2, size, size), "やめる")) { Application.LoadLevel("test"); }
 	}
 }

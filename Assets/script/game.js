@@ -54,7 +54,7 @@ function OnGUI()
 		var total_ui_height : float = label_height + margin + size;
 
 		var x : float = (sw - total_ui_width) / 2;
-		var y : float = (sh - total_ui_height) / 2;
+		var y : float = (sh - total_ui_height) / 4;
 		
 		GUI.Box(new Rect(x, y, total_ui_width, label_height), "ゲームレベル");
 
@@ -67,20 +67,12 @@ function OnGUI()
 		if(GUI.Button(new Rect(x + place * 2, y, size, size), "Level 3")) { this.game_level = 3; }
 		if(GUI.Button(new Rect(x + place * 3, y, size, size), "Level 4")) { this.game_level = 4; }
 		if(GUI.Button(new Rect(x + place * 4, y, size, size), "Level 5")) { this.game_level = 5; }
-	
+		
+		GUI.Box(new Rect(x, y * 2, total_ui_width, label_height), "オプション");
+		if(GUI.Button(new Rect(x + place * 2, y * 2 + size / 2, size, size), "せつめい")) { Application.LoadLevel("intro"); }
+		
 		if(this.game_level > 0) { state = "GAME_PLAY"; }	
 	}
-/*	
-	if(state == "GAME_CLEAR" && state == "GAME_OVER")
-	{
-		var rect_gameover : Rect = Rect(0, 0, Screen.width, Screen.height);
-		var rect_info : Rect = Rect(730, 0, Screen.width, Screen.height);
-	
-		
-		GUI.Label(rect_gameover, state, labelStyleGameEnd); 
-		GUI.Label(rect_info, "click to retry", labelStyleGameEnd);
-	}
-*/	
 }
 	
 
