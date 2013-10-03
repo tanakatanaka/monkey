@@ -92,6 +92,8 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
 	var kouho = new Array();
 	var result : int;
 	
+	Debug.Log("回転したい");
+	
 	for (var i = 0; i < 3; i++)
 	{
   		if (h[i] == 0 || h[i] == 2)

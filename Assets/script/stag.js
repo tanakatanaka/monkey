@@ -47,7 +47,7 @@ function role_animation()
 {
 	var now_angle = this.transform.rotation.eulerAngles.y;
 	
-	if(this.role_angle > 0)
+	if(this.role_angle >= 0)
 	{
 		if(now_angle > this.role_angle)
 		{
