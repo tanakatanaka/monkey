@@ -20,6 +20,6 @@ function OnGUI()
 	
 	if(state == "GAME_PLAY")
 	{
-		if(GUI.Button(new Rect(sw - size * 1.5, 0, size, size), "やめる")) { Application.LoadLevel("test"); }
+		if(GUI.Button(new Rect(sw - size, 0, size, size), "やめる")) { Application.LoadLevel("test"); }
 	}
 }
