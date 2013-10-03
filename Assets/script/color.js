@@ -30,7 +30,7 @@ function Update ()
 { 
 	this.time_count++;
 	
-	if(this.color == 1 || this.color == 4 || this.color == -1)
+	if(this.color == 1 || this.color == 4 || this.color == -1 || this.color == -5)
 	{
 		this.renderer.material.color.a = 0;
 	}

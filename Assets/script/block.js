@@ -7,8 +7,8 @@ private var life : float = 0;
 function set_max(level : int)
 {
 	//levelに応じて最大値を決定
-	if(level == 1 || level == 4 || level == 5) { this.max_life = 8; }
-	else if(level == 2 || level == 3) { this.max_life = 7; }
+	if(level == 1 || level == 4) { this.max_life = 7; }
+	else if(level == 2 || level == 3 || level == 5) { this.max_life = 6; }
 }	
 function damege_block()
 {

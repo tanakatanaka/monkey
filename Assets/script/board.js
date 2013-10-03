@@ -212,7 +212,7 @@ function atk_point(p : Vector2) : boolean
 	var content = area_check(p);
 	var num;
 	
-	Debug.Log(p);
+	//Debug.Log(p);
 
 	if(content ==  1)
 	{

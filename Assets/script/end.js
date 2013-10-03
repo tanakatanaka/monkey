@@ -39,11 +39,6 @@ function OnGUI()
 		var place : float = size + margin;
 		
 		if(GUI.Button(new Rect(x + place, y, size, size), "つづける")) { Application.LoadLevel("test"); }
-		if(GUI.Button(new Rect(x + place * 3, y, size, size), "やめる")) { Application.LoadLevel("op"); }
-	}
-	
-	else if(state == "GAME_PLAY")
-	{
-		if(GUI.Button(new Rect(sw - size * 2, y - size * 2, size, size), "やめる")) { Application.LoadLevel("test"); }
+		if(GUI.Button(new Rect(x + place * 3, y, size, size), "タイトルへ")) { Application.LoadLevel("op"); }
 	}
 }

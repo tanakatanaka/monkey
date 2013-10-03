@@ -38,6 +38,18 @@ function stag_dead(i : int)
 	stags[i] = null;
 }
 
+function shuffle_stag()
+{
+	for(var i = 0; i  < this.count; i++)
+	{
+		if(stags[i] != null) 
+		{
+			stags[i].SendMessage("set_role", Random.Range(0, 3) * 90);
+			//stags[i].transform.rotation.eulerAngles.y = Random.Range(0, 3) * 90; 
+		}
+	}
+}
+
 function hougaku_plus(point : int) :Vector2 
 {
 	if(point == 0){return Vector2(0,-1);}
@@ -60,12 +72,12 @@ function stag_hougaku(i : int) : int
 }
 
 //levelに応じて確率を計算し,真偽を返す
-function level_pro() : boolean
+function level_ai() : boolean
 {
 	var level = g.Get_level();
 	var probability = 0;
 	
-	if(level == 1 || level == 4) { return true; }
+	if(level == 1 || level == 4) { return false; }
 	else if(level == 2 || level == 5) { probability = 30; }
 	else if(level == 3) { probability = 50; }
 	
@@ -99,7 +111,8 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
 		result = kouho[Random.Range(0, kouho.length)]; 
 	}
 	var hougaku_result : int = ( (result + 1) + stag_hougaku(stag_num) ) % 4;
-	stags[stag_num].transform.rotation.eulerAngles.y = hougaku_result * 90;
+	stags[stag_num].SendMessage("set_role", hougaku_result * 90);
+	//stags[stag_num].transform.rotation.eulerAngles.y = hougaku_result * 90;
 }
 
 function combo_check() : boolean
@@ -153,7 +166,7 @@ function thinking(p : Vector2, i : int) : int
 		else{ combo[i] = false; }
 	}
 	//コンボがなくて前方が空白マスなら前進
-	if(front == 0 && (level_pro() == true || combo[i] == false)){ return 1; }
+	if(front == 0 && (level_ai() == true || combo[i] == false)){ return 1; }
 	else{ change_of_direction(right, down, left, i); }
 		
 	return -1;
