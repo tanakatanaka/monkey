@@ -51,11 +51,12 @@ function OnGUI()
 		var margin : float = size / 3;
 		var label_height : float = size / 4;
 		var total_ui_width : float = size * 5 + margin * 4;
-		var total_ui_height : float = label_height + margin + size + margin + label_height + margin + size;
+		var total_ui_height : float =  margin + label_height + margin + size + margin + label_height + margin + size;
 
 		var x : float = (sw - total_ui_width) / 2;
 		var y : float = (sh - total_ui_height) / 2;
 		
+		y += margin;
 		GUI.Box(new Rect(x, y, total_ui_width, label_height), "ゲームレベル");
 
 		y += label_height + margin;
