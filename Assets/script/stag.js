@@ -1,19 +1,26 @@
 #pragma strict
 
-private var distance : Vector3 = Vector3(0,0,0);
-private var arrive_count : int  = 0;
-private var arrive_point : Vector3;
+/* 移動モーション関係の変数 */
+
+// 移動にかかる秒数 (定数)
+private var MOVE_DURATION : float = 1 / 4.0f;
+// 移動を始めた時刻 (-1だと動いていない)
+private var move_started_time : float = -1;
+// 移動もとの座標
+private var move_from : Vector3;
+// 移動先の座標
+private var move_to : Vector3;
 
 /* 回転関係の変数 */
 
 // 回転にかかる秒数 (定数)
 private var ROTATION_DURATION : float = 1 / 4.0f;
-// 回転を始めた時刻
-private var rotation_started_time : float = -1;
+// 回転を始めた時刻 (-1だと動いていない)
+private var rotate_started_time : float = -1;
 // 回転もとの姿勢
-private var from : Quaternion;
+private var rotate_from : Quaternion;
 // 回転先の姿勢
-private var to : Quaternion;
+private var rotate_to : Quaternion;
 
 function set_dead()
 {
@@ -23,50 +30,46 @@ function set_dead()
 
 function set_stag_positon(p : Vector3)
 {
-	distance = p - this.transform.position;
-	arrive_point = p;  
+	this.move_from = this.transform.position;
+	this.move_to = p;
+	this.move_started_time = Time.time;
 }
 
 function set_roll(angle : float)
 {
-	this.from = this.transform.rotation;
-	this.to = this.from;
-	this.to.eulerAngles.y = angle;
-	this.rotation_started_time = Time.time;
+	this.rotate_from = this.transform.rotation;
+	this.rotate_to = this.rotate_from;
+	this.rotate_to.eulerAngles.y = angle;
+	this.rotate_started_time = Time.time;
 }
 
 function move_animation()
 {
-	var cut = 30;
-
-	if(distance != Vector3(0,0,0))
+  var delta : float = Time.time - this.move_started_time;
+  
+	if(delta < MOVE_DURATION)
 	{
-		if(arrive_count != cut)
-		{
-			this.transform.position += distance / cut;
-			arrive_count++;
-		}
-		else
-		{
-			this.transform.position = arrive_point;
-			distance = Vector3(0,0,0);
-			arrive_count = 0;
-		}
+		this.transform.position = Vector3.Lerp(this.move_from, this.move_to, delta / MOVE_DURATION);
+	}
+	else if (this.move_started_time > 0)
+	{
+	  this.transform.position = this.move_to;
+	  this.move_started_time = -1;
 	}
 }
 
 function roll_animation()
 {
-  var delta : float = Time.time - this.rotation_started_time;
+  var delta : float = Time.time - this.rotate_started_time;
   
 	if(delta < ROTATION_DURATION)
 	{
-		this.transform.rotation = Quaternion.Slerp(this.from, this.to, delta / ROTATION_DURATION);
+		this.transform.rotation = Quaternion.Slerp(this.rotate_from, this.rotate_to, delta / ROTATION_DURATION);
 	}
-	else if (this.rotation_started_time > 0)
+	else if (this.rotate_started_time > 0)
 	{
-	  this.transform.rotation = this.to;
-	  this.rotation_started_time = -1;
+	  this.transform.rotation = this.rotate_to;
+	  this.rotate_started_time = -1;
 	}
 }
 
