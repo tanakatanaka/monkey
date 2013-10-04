@@ -3,9 +3,9 @@
 private var distance : Vector3 = Vector3(0,0,0);
 private var arrive_count : int  = 0;
 private var arrive_point : Vector3;
-
-private var from :  Transform;
-private var to :  Transform;
+private var roll_flag : boolean = false;
+private var from : Quaternion;
+private var to : Quaternion;
 
 function set_dead()
 {
@@ -19,11 +19,12 @@ function set_stag_positon(p : Vector3)
 	arrive_point = p;  
 }
 
-function set_role(angle : float)
+function set_roll(angle : float)
 {
-	this.from = this.transform;
+	this.from = this.transform.rotation;
 	this.to = this.from;
-	this.to.rotation.eulerAngles.y = angle;
+	this.to.eulerAngles.y = angle;
+	this.roll_flag = true;
 }
 
 function move_animation()
@@ -46,9 +47,17 @@ function move_animation()
 	}
 }
 
-function role_animation()
+function roll_animation()
 {
-	this.transform.rotation = Quaternion.Lerp (from, to, Time.time * 0.1);
+	if(this.roll_flag == true)
+	{
+		this.transform.rotation = Quaternion.Slerp (this.from, this.to, Time.time * 0.2);
+	}
+	
+	if(this.transform.rotation == this.to)
+	{
+		this.roll_flag = false;
+	}
 }
 
 
@@ -60,6 +69,6 @@ function attack_animation()
 function Update () 
 {
 	move_animation();
-	role_animation();
+	roll_animation();
 	attack_animation();
 }

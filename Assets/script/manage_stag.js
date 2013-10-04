@@ -44,7 +44,7 @@ function shuffle_stag()
 	{
 		if(stags[i] != null) 
 		{
-			stags[i].SendMessage("set_role", Random.Range(0, 3) * 90);
+			stags[i].SendMessage("set_roll", Random.Range(0, 3) * 90);
 			//stags[i].transform.rotation.eulerAngles.y = Random.Range(0, 3) * 90; 
 		}
 	}
@@ -113,7 +113,7 @@ function change_of_direction(r : int, d : int, l : int, stag_num : int)
 		result = kouho[Random.Range(0, kouho.length)]; 
 	}
 	var hougaku_result : int = ( (result + 1) + stag_hougaku(stag_num) ) % 4;
-	stags[stag_num].SendMessage("set_role", hougaku_result * 90);
+	stags[stag_num].SendMessage("set_roll", hougaku_result * 90);
 	//stags[stag_num].transform.rotation.eulerAngles.y = hougaku_result * 90;
 }
 
