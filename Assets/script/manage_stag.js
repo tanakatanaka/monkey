@@ -215,12 +215,40 @@ function reset_combo()
 	}
 }
 
+// クワガタがどれかアニメ中かどうか調べる
+private function is_stag_animating() : boolean
+{
+	for(var i = 0; i < this.count; i++)
+	{
+		if (stags[i] != null)
+		{
+			var s : stag = stags[i].GetComponent("stag");
+			
+			if (s.is_animating())
+			{
+				Debug.Log(i + "番がアニメ中 ちょっと待つ");
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 function Update () 
 {
 	var now_stag : int = 0;
+	
+	// ターンがこちらにまわってきてて、アニメが全部おわってたら行動
 	if(g.Get_turn() % 2 == 0)
 	{
+		// アニメ中のクワガタがいたらちょっと待つ
+		if (is_stag_animating())
+		{
+			return;
+		}
+	
 		reset_combo();
+		
 		for(var i = 0; i  < this.count; i++)
 		{
 			if(stags[i] != null){ stag_act(i); }
