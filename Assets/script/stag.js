@@ -3,8 +3,16 @@
 private var distance : Vector3 = Vector3(0,0,0);
 private var arrive_count : int  = 0;
 private var arrive_point : Vector3;
-private var roll_flag : boolean = false;
+
+/* 回転関係の変数 */
+
+// 回転にかかる秒数 (定数)
+private var ROTATION_DURATION : float = 1 / 4.0f;
+// 回転を始めた時刻
+private var rotation_started_time : float = -1;
+// 回転もとの姿勢
 private var from : Quaternion;
+// 回転先の姿勢
 private var to : Quaternion;
 
 function set_dead()
@@ -24,7 +32,7 @@ function set_roll(angle : float)
 	this.from = this.transform.rotation;
 	this.to = this.from;
 	this.to.eulerAngles.y = angle;
-	this.roll_flag = true;
+	this.rotation_started_time = Time.time;
 }
 
 function move_animation()
@@ -49,14 +57,16 @@ function move_animation()
 
 function roll_animation()
 {
-	if(this.roll_flag == true)
+  var delta : float = Time.time - this.rotation_started_time;
+  
+	if(delta < ROTATION_DURATION)
 	{
-		this.transform.rotation = Quaternion.Slerp (this.from, this.to, Time.time * 0.2);
+		this.transform.rotation = Quaternion.Slerp(this.from, this.to, delta / ROTATION_DURATION);
 	}
-	
-	if(this.transform.rotation == this.to)
+	else if (this.rotation_started_time > 0)
 	{
-		this.roll_flag = false;
+	  this.transform.rotation = this.to;
+	  this.rotation_started_time = -1;
 	}
 }
 
