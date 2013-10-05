@@ -3,7 +3,7 @@
 /* 移動モーション関係の変数 */
 
 // 移動にかかる秒数 (定数)
-private var MOVE_DURATION : float = 2;
+private var MOVE_DURATION : float = 0.5;
 // 移動を始めた時刻 (-1だと動いていない)
 private var move_started_time : float = -1;
 // 移動もとの座標
@@ -14,7 +14,7 @@ private var move_to : Vector3;
 /* 回転関係の変数 */
 
 // 回転にかかる秒数 (定数)
-private var ROTATION_DURATION : float = 2;
+private var ROTATION_DURATION : float = 0.5;
 // 回転を始めた時刻 (-1だと動いていない)
 private var rotate_started_time : float = -1;
 // 回転もとの姿勢
