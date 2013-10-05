@@ -3,6 +3,10 @@
 var page : int = 1;
 var max_page : int = 4;
 
+function Get_max_page()
+{
+	return this.max_page;
+}
 
 function Get_page()
 {
@@ -31,12 +35,12 @@ function OnGUI()
 	
 	if(this.page != 1)
 	{
-		if(GUI.Button(new Rect(x + place, y, size, size), "まえへ")) { this.page--; }
+		if(GUI.Button(new Rect(0, y, size, size), "まえへ")) { this.page--; }
 	}
-	if(GUI.Button(new Rect(x + place * 2, y, size, size), "メニューへ")) { Application.LoadLevel("test"); }
+	if(GUI.Button(new Rect(sw - size, y - margin - size, size, size), "メニューへ")) { Application.LoadLevel("test"); }
 	if(this.page != this.max_page)
 	{
-		if(GUI.Button(new Rect(x + place * 3, y, size, size), "つぎへ")) { this.page++; }
+		if(GUI.Button(new Rect(sw - size, y, size, size), "つぎへ")) { this.page++; }
 	}
 }
 
