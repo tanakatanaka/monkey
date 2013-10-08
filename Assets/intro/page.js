@@ -16,8 +16,11 @@ function OnGUI()
 	var sw = Screen.width;
 	var sh = Screen.height;
 	
-	var pw = pict[page].width;
-	var ph = pict[page].height;
+	//var pw = pict[page].width;
+	//var ph = pict[page].height;
+	
+	var pw = sw * 2 / 3;
+	var ph = pw / 2.5;
 	
 	var x : float = (sw - pw) / 2;
 	var y : float = (sh - ph) / 2;
